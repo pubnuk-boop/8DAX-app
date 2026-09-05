@@ -1,636 +1,993 @@
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>8DAX Apple of Fortune</title>
-  <style>
-    :root {
-      --bg-color: #fcf4f4;
-      --card-bg: #ffffff;
-      --text-dark: #2c1a1a;
-      --text-muted: #8c7373;
-      --accent-red: #d9383a;
-      --accent-light: #fbebe9;
-      --border-color: #f3dcdb;
-      --green-status: #34c759;
-    }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  <title>Mopizor — Assistant</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      background-color: #e5e5e5;
-      display: flex;
-      justify-content: center;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff7f5;
+      color: #76272c;
       min-height: 100vh;
     }
 
-    .app-container {
-      width: 100%;
-      max-width: 430px;
-      background-color: var(--bg-color);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      position: relative;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
+    /* ================= HEADER ================= */
 
-    .top-bar {
-      height: 4px;
-      background-color: var(--accent-red);
-      width: 100%;
-    }
+    header {
+      height: 138px;
+      background: #fff;
+      border-top: 5px solid #d9272e;
+      border-bottom: 2px solid #f2d4d4;
 
-    .header {
-      background: var(--card-bg);
-      padding: 10px 16px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      padding: 0 46px;
+
+      box-shadow: 0 2px 7px rgba(130, 40, 40, .08);
     }
 
-    .header-left {
+    .profile {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 20px;
     }
 
-    .avatar-container {
+    .avatar-wrapper {
       position: relative;
-      width: 44px;
-      height: 44px;
+      width: 92px;
+      height: 92px;
     }
 
-    .avatar-img {
-      width: 100%;
-      height: 100%;
+    .avatar {
+      width: 92px;
+      height: 92px;
       border-radius: 50%;
       object-fit: cover;
-      border: 1px solid var(--border-color);
+      border: 4px solid #d9272e;
+      display: block;
+    }
+
+    .online-dot {
+      position: absolute;
+      width: 29px;
+      height: 29px;
+      right: -1px;
+      bottom: 0;
+
+      background: #25c878;
+      border-radius: 50%;
+      border: 3px solid white;
+    }
+
+    .profile-info h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #78292d;
+      margin-bottom: 8px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      color: #8a3438;
     }
 
     .status-dot {
-      position: absolute;
-      bottom: 1px;
-      right: 1px;
-      width: 12px;
-      height: 12px;
-      background-color: var(--green-status);
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
-      border: 2px solid white;
+      background: #4bcf91;
     }
 
-    .header-info {
+    .hamburger {
+      margin-left: auto;
+      width: 42px;
+      height: 42px;
+
       display: flex;
       flex-direction: column;
-    }
+      justify-content: center;
+      gap: 7px;
 
-    .header-title {
-      font-size: 0.98rem;
-      font-weight: 700;
-      color: var(--text-dark);
-    }
-
-    .header-status {
-      font-size: 0.78rem;
-      color: var(--green-status);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .menu-btn {
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: #665252;
       cursor: pointer;
     }
 
-    .chat-body {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      flex: 1;
-      padding-bottom: 90px;
+    .hamburger span {
+      display: block;
+      width: 35px;
+      height: 4px;
+      border-radius: 4px;
+      background: #6c7585;
     }
 
-    .message-bubble {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 14px 18px;
-      font-size: 0.92rem;
-      line-height: 1.45;
-      color: var(--text-dark);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.01);
-      max-width: 88%;
+    /* ================= MAIN ================= */
+
+    main {
+      padding: 34px 29px 160px;
+      max-width: 900px;
+      margin: auto;
     }
+
+    /* ================= INTRO ================= */
+
+    .intro {
+      background: #fff;
+
+      border: 2px solid #f1cfd0;
+      border-radius: 27px;
+
+      padding: 28px 31px;
+
+      box-shadow: 0 3px 8px rgba(100, 30, 30, .10);
+
+      font-size: 27px;
+      line-height: 1.55;
+
+      margin-bottom: 27px;
+    }
+
+    .intro p + p {
+      margin-top: 20px;
+    }
+
+    /* ================= AUDIO ================= */
 
     .audio-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 12px 14px;
-      width: 80%;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.01);
-      position: relative;
+      background: #fff;
+
+      border: 2px solid #f1cfd0;
+      border-radius: 27px;
+
+      padding: 25px 27px;
+
+      box-shadow: 0 3px 8px rgba(100, 30, 30, .09);
+
+      margin-bottom: 25px;
     }
 
-    .audio-header {
+    .audio-title {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--accent-red);
-      font-weight: 600;
-      margin-bottom: 8px;
+      gap: 13px;
+
+      color: #687488;
+      font-size: 25px;
+      margin-bottom: 17px;
+    }
+
+    .mic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+
+      background: #d72c32;
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 21px;
     }
 
     .audio-controls {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 20px;
     }
 
     .play-button {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background-color: var(--accent-red);
+      flex: 0 0 auto;
+
+      width: 80px;
+      height: 80px;
+
       border: none;
+      border-radius: 50%;
+
+      background: #df272e;
       color: white;
+
+      font-size: 35px;
+      cursor: pointer;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
-      cursor: pointer;
-      flex-shrink: 0;
+
+      padding-left: 6px;
+
+      box-shadow: 0 2px 5px rgba(120, 20, 20, .15);
     }
 
-    .waveform-container {
+    .audio-progress-area {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
     }
 
-    .audio-track {
+    .progress {
       width: 100%;
-      height: 6px;
-      background: #f3dcdb;
-      border-radius: 3px;
+      height: 8px;
+      background: #f2c8ca;
+      border-radius: 10px;
       position: relative;
       cursor: pointer;
     }
 
-    .audio-progress {
+    .progress-fill {
       width: 0%;
       height: 100%;
-      background: var(--accent-red);
-      border-radius: 3px;
-      position: relative;
-    }
-
-    .audio-time {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    .speed-tag {
-      background: #fbebe9;
-      color: var(--accent-red);
-      font-size: 0.75rem;
-      padding: 4px 7px;
+      background: #df272e;
       border-radius: 10px;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
     }
 
-    .faq-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .progress-knob {
+      position: absolute;
+      left: 0;
+      top: 50%;
 
-    .faq-chip {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 10px 14px;
-      font-size: 0.82rem;
-      color: var(--accent-red);
-      font-weight: 600;
-      cursor: pointer;
-    }
+      width: 29px;
+      height: 29px;
 
-    .platforms-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 16px;
-      margin-top: 8px;
-    }
+      transform: translate(-2px, -50%);
 
-    .platforms-title {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #a08a8a;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-bottom: 12px;
-    }
-
-    .platforms-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .platform-btn {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 7px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: var(--text-dark);
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-      min-width: 0;
-    }
-
-    .platform-left {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      min-width: 0;
-      width: 100%;
-    }
-
-    .platform-code {
-      color: var(--accent-red);
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .copy-icon-box {
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 2px 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #faf4f4;
-      color: var(--accent-red);
-      font-size: 0.75rem;
-      margin-left: 2px;
-      flex-shrink: 0;
-    }
-
-    .input-bar {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 430px;
-      background: var(--bg-color);
-      padding: 10px 16px 16px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .input-field {
-      flex: 1;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 25px;
-      padding: 12px 18px;
-      font-size: 0.9rem;
-      color: var(--text-dark);
-      outline: none;
-    }
-
-    .send-btn {
-      width: 42px;
-      height: 42px;
       border-radius: 50%;
-      background: #f7dcdb;
-      border: none;
+      background: #df272e;
+
+      border: 5px solid #f6d6d7;
+    }
+
+    .time-row {
+      display: flex;
+      justify-content: space-between;
+
+      margin-top: 9px;
+
+      font-size: 21px;
+      color: #8b96a6;
+    }
+
+    .speed {
+      width: 72px;
+      height: 49px;
+
+      border-radius: 12px;
+
+      background: #f9dddd;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
+      color: #df272e;
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    /* ================= FAQ BUTTONS ================= */
+
+    .questions {
+      display: flex;
+      gap: 18px;
+
+      margin-bottom: 365px;
+    }
+
+    .question {
+      flex: 1;
+
+      min-height: 67px;
+
+      padding: 12px 23px;
+
+      border: 2px solid #f0c8ca;
+      border-radius: 35px;
+
+      background: #fff;
+
+      color: #bd3035;
+
+      font-size: 22px;
+      font-weight: 600;
+
       cursor: pointer;
+
+      transition: .2s;
     }
 
-    .send-btn svg {
-      fill: #d9383a;
-      width: 18px;
-      height: 18px;
-      transform: rotate(45deg);
+    .question:hover {
+      background: #fff0ef;
     }
 
-    .toast {
+    /* ================= INFORMATION BOX ================= */
+
+    .info-box {
+      background: #fff9f8;
+
+      border: 2px solid #f1cfd0;
+      border-radius: 27px;
+
+      padding: 27px;
+
+      box-shadow: 0 3px 8px rgba(100, 30, 30, .08);
+
+      margin-bottom: 30px;
+    }
+
+    .info-title {
+      color: #aab4c6;
+
+      font-size: 19px;
+      font-weight: bold;
+
+      letter-spacing: 3px;
+
+      margin-bottom: 22px;
+    }
+
+    .info-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .info-item {
+      background: #fff;
+
+      border: 2px solid #f1cfd0;
+
+      border-radius: 30px;
+
+      padding: 13px 22px;
+
+      color: #8c3a3f;
+
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    /* ================= CHAT ================= */
+
+    .chat {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
       position: fixed;
-      top: 60px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(44, 26, 26, 0.9);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-      z-index: 100;
+
+      left: 29px;
+      right: 29px;
+      bottom: 22px;
+
+      max-width: 842px;
+      margin: auto;
     }
 
-    .toast.show { opacity: 1; }
+    .message-input {
+      flex: 1;
+
+      height: 74px;
+
+      border: 2px solid #f0c8ca;
+      border-radius: 40px;
+
+      background: #fffafa;
+
+      padding: 0 32px;
+
+      font-size: 22px;
+      outline: none;
+
+      color: #763136;
+    }
+
+    .message-input::placeholder {
+      color: #ca9a9d;
+    }
+
+    .send {
+      width: 78px;
+      height: 78px;
+
+      border: none;
+      border-radius: 50%;
+
+      background: #f5aeb2;
+
+      color: white;
+
+      font-size: 32px;
+
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ================= MENU ================= */
+
+    .menu {
+      display: none;
+
+      position: absolute;
+      right: 25px;
+      top: 115px;
+
+      width: 230px;
+
+      background: white;
+
+      border: 1px solid #f0cccc;
+      border-radius: 15px;
+
+      box-shadow: 0 8px 30px rgba(0,0,0,.12);
+
+      padding: 10px;
+
+      z-index: 10;
+    }
+
+    .menu.active {
+      display: block;
+    }
+
+    .menu div {
+      padding: 14px;
+
+      border-radius: 10px;
+
+      cursor: pointer;
+      color: #763136;
+      font-size: 17px;
+    }
+
+    .menu div:hover {
+      background: #fff0ef;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 650px) {
+
+      header {
+        height: 138px;
+        padding: 0 28px;
+      }
+
+      .avatar-wrapper,
+      .avatar {
+        width: 92px;
+        height: 92px;
+      }
+
+      .profile-info h1 {
+        font-size: 26px;
+      }
+
+      .status {
+        font-size: 21px;
+      }
+
+      main {
+        padding: 33px 24px 145px;
+      }
+
+      .intro {
+        font-size: 26px;
+        padding: 24px 30px;
+      }
+
+      .audio-card {
+        padding: 23px;
+      }
+
+      .audio-controls {
+        gap: 15px;
+      }
+
+      .play-button {
+        width: 78px;
+        height: 78px;
+      }
+
+      .speed {
+        display: none;
+      }
+
+      .questions {
+        gap: 15px;
+        margin-bottom: 365px;
+      }
+
+      .question {
+        font-size: 20px;
+        padding: 10px 18px;
+      }
+
+      .info-box {
+        padding: 25px;
+      }
+
+      .info-list {
+        gap: 12px;
+      }
+
+      .info-item {
+        font-size: 17px;
+        padding: 11px 17px;
+      }
+
+      .chat {
+        left: 24px;
+        right: 24px;
+      }
+
+      .message-input {
+        height: 68px;
+        font-size: 19px;
+        padding: 0 25px;
+      }
+
+      .send {
+        width: 70px;
+        height: 70px;
+      }
+    }
+
+    @media (max-width: 450px) {
+
+      .profile {
+        gap: 13px;
+      }
+
+      .avatar-wrapper,
+      .avatar {
+        width: 80px;
+        height: 80px;
+      }
+
+      .online-dot {
+        width: 27px;
+        height: 27px;
+      }
+
+      .profile-info h1 {
+        font-size: 22px;
+      }
+
+      .status {
+        font-size: 18px;
+      }
+
+      .hamburger span {
+        width: 32px;
+      }
+
+      .intro {
+        font-size: 22px;
+        line-height: 1.55;
+      }
+
+      .questions {
+        flex-direction: column;
+        margin-bottom: 330px;
+      }
+
+      .question {
+        width: 100%;
+      }
+
+      .audio-title {
+        font-size: 21px;
+      }
+    }
   </style>
 </head>
+
 <body>
 
-  <div class="app-container">
-    <div class="top-bar"></div>
+  <!-- ================= HEADER ================= -->
 
-    <!-- Header -->
-    <div class="header">
-      <div class="header-left">
-        <div class="avatar-container">
-          <img id="avatarImg" class="avatar-img" src="https://via.placeholder.com/100/d9383a/ffffff?text=8DAX" alt="Avatar">
-          <div class="status-dot"></div>
-        </div>
-        <div class="header-info">
-          <div class="header-title">8DAX Apple of Fortune</div>
-          <div class="header-status">En ligne</div>
+  <header>
+
+    <div class="profile">
+
+      <div class="avatar-wrapper">
+        <img
+          class="avatar"
+          src="avatar.jpg"
+          alt="Profil"
+        >
+
+        <div class="online-dot"></div>
+      </div>
+
+      <div class="profile-info">
+        <h1>Mopizor Assistant</h1>
+
+        <div class="status">
+          <span class="status-dot"></span>
+          En ligne
         </div>
       </div>
-      <button class="menu-btn">≡</button>
+
     </div>
 
-    <!-- Chat Body -->
-    <div class="chat-body">
-
-      <div class="message-bubble">
-        Salut ! Tu t'intéresses à l'Apple of Fortune ? Tu es au bon endroit. 👌
-        <br><br>
-        Avant de poser tes questions écoute d'abord le vocal suivant
-      </div>
-
-      <!-- Voice Message Card -->
-      <div class="audio-card">
-        <div class="audio-header">
-          <span>🔴 Message vocal</span>
-        </div>
-
-        <div id="audioPlayerContainer">
-          <div class="audio-controls">
-            <button class="play-button" id="playBtn" onclick="toggleAudio()">▶</button>
-
-            <div class="waveform-container">
-              <div class="audio-track" onclick="seekAudio(event)">
-                <div class="audio-progress" id="progressBar"></div>
-              </div>
-
-              <div class="audio-time">
-                <span id="currentTime">0:00</span>
-                <span id="totalDuration">0:00</span>
-              </div>
-            </div>
-
-            <button class="speed-tag" id="speedBtn" onclick="toggleSpeed()">1x</button>
-          </div>
-        </div>
-
-        <audio id="vocalAudio" src=""></audio>
-      </div>
-
-      <!-- FAQ Buttons -->
-      <div class="faq-buttons">
-        <div class="faq-chip" onclick="copyPromo('8DAX')">
-          Comment gagner à Apple of Fortune ?
-        </div>
-
-        <div class="faq-chip" onclick="copyPromo('8DAX')">
-          Comment m'inscrire ?
-        </div>
-      </div>
-
-      <!-- Platforms Card -->
-      <div class="platforms-card">
-        <div class="platforms-title">PLATEFORMES RECOMMANDÉES</div>
-
-        <div class="platforms-grid">
-
-          <!-- 1XBET -->
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left">
-              <span>↗</span>
-              1XBET
-              <span class="platform-code">8DAX</span>
-              <span class="copy-icon-box">⧉</span>
-            </div>
-          </div>
-
-          <!-- MELBET -->
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left">
-              <span>↗</span>
-              MELBET
-              <span class="platform-code">8DAX</span>
-              <span class="copy-icon-box">⧉</span>
-            </div>
-          </div>
-
-          <!-- BETWINNER -->
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left">
-              <span>↗</span>
-              BETWINNER
-              <span class="platform-code">8DAX</span>
-              <span class="copy-icon-box">⧉</span>
-            </div>
-          </div>
-
-          <!-- WINWIN -->
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left">
-              <span>↗</span>
-              WINWIN
-              <span class="platform-code">8DAX</span>
-              <span class="copy-icon-box">⧉</span>
-            </div>
-          </div>
-
-          <!-- 888STARZ -->
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left">
-              <span>↗</span>
-              888STARZ
-              <span class="platform-code">8DAX</span>
-              <span class="copy-icon-box">⧉</span>
-            </div>
-          </div>
-
-          <!-- PARIPESA -->
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left">
-              <span>↗</span>
-              PARIPESA
-              <span class="platform-code">8DAX</span>
-              <span class="copy-icon-box">⧉</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
 
-    <!-- Input Bar -->
-    <div class="input-bar">
-      <input
-        type="text"
-        class="input-field"
-        placeholder="Écrivez votre message..."
-      >
+  </header>
 
-      <button class="send-btn">
-        <svg viewBox="0 0 24 24">
-          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-        </svg>
-      </button>
-    </div>
+  <!-- ================= MENU ================= -->
 
-    <div id="toast" class="toast">
-      Code promo 8DAX copié !
-    </div>
+  <div class="menu" id="menu">
+    <div>Accueil</div>
+    <div>Informations</div>
+    <div>Questions fréquentes</div>
+    <div>Contact</div>
   </div>
 
-  <script>
-    const audio = document.getElementById('vocalAudio');
-    const playBtn = document.getElementById('playBtn');
-    const progressBar = document.getElementById('progressBar');
-    const currentTimeEl = document.getElementById('currentTime');
-    const totalDurationEl = document.getElementById('totalDuration');
-    const speedBtn = document.getElementById('speedBtn');
-    const toast = document.getElementById('toast');
 
-    function toggleAudio() {
-      if (!audio.src) return;
+  <!-- ================= MAIN ================= -->
+
+  <main>
+
+    <!-- INTRO -->
+
+    <section class="intro">
+
+      <p>
+        Salut ! Tu es au bon endroit. 👌
+      </p>
+
+      <p>
+        Avant de poser tes questions écoute d'abord
+        le vocal suivant
+      </p>
+
+    </section>
+
+
+    <!-- AUDIO -->
+
+    <section class="audio-card">
+
+      <div class="audio-title">
+
+        <div class="mic">
+          🎙
+        </div>
+
+        <span>Message vocal</span>
+
+      </div>
+
+      <div class="audio-controls">
+
+        <button class="play-button" id="play">
+          ▶
+        </button>
+
+        <div class="audio-progress-area">
+
+          <div class="progress" id="progress">
+
+            <div
+              class="progress-fill"
+              id="progressFill">
+            </div>
+
+            <div
+              class="progress-knob"
+              id="progressKnob">
+            </div>
+
+          </div>
+
+          <div class="time-row">
+
+            <span id="currentTime">
+              0:00
+            </span>
+
+            <span id="duration">
+              0:00
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="speed">
+          1x
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUESTIONS -->
+
+    <section class="questions">
+
+      <button
+        class="question"
+        onclick="showAnswer('Comment fonctionne ce service ?')">
+
+        Comment fonctionne ce service ?
+
+      </button>
+
+      <button
+        class="question"
+        onclick="showAnswer('Comment m’inscrire ?')">
+
+        Comment m'inscrire ?
+
+      </button>
+
+    </section>
+
+
+    <!-- INFORMATION -->
+
+    <section class="info-box">
+
+      <div class="info-title">
+        INFORMATIONS
+      </div>
+
+      <div class="info-list">
+
+        <div class="info-item">
+          Documentation
+        </div>
+
+        <div class="info-item">
+          Guide utilisateur
+        </div>
+
+        <div class="info-item">
+          FAQ
+        </div>
+
+        <div class="info-item">
+          Assistance
+        </div>
+
+        <div class="info-item">
+          Nouveautés
+        </div>
+
+        <div class="info-item">
+          Contact
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= CHAT ================= -->
+
+  <div class="chat">
+
+    <input
+      id="message"
+      class="message-input"
+      type="text"
+      placeholder="Écrivez votre message..."
+    >
+
+    <button
+      class="send"
+      id="send">
+
+      ➤
+
+    </button>
+
+  </div>
+
+
+  <!-- ================= AUDIO FILE ================= -->
+
+  <audio id="audio" src="message.mp3"></audio>
+
+
+  <script>
+
+    /* ================= MENU ================= */
+
+    const hamburger =
+      document.getElementById("hamburger");
+
+    const menu =
+      document.getElementById("menu");
+
+    hamburger.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+
+
+    /* ================= AUDIO ================= */
+
+    const audio =
+      document.getElementById("audio");
+
+    const play =
+      document.getElementById("play");
+
+    const progress =
+      document.getElementById("progress");
+
+    const progressFill =
+      document.getElementById("progressFill");
+
+    const progressKnob =
+      document.getElementById("progressKnob");
+
+    const currentTime =
+      document.getElementById("currentTime");
+
+    const duration =
+      document.getElementById("duration");
+
+
+    function formatTime(seconds) {
+
+      if (!isFinite(seconds)) return "0:00";
+
+      const minutes =
+        Math.floor(seconds / 60);
+
+      const secs =
+        Math.floor(seconds % 60)
+          .toString()
+          .padStart(2, "0");
+
+      return `${minutes}:${secs}`;
+    }
+
+
+    audio.addEventListener("loadedmetadata", () => {
+
+      duration.textContent =
+        formatTime(audio.duration);
+
+    });
+
+
+    play.addEventListener("click", () => {
 
       if (audio.paused) {
+
         audio.play();
-        playBtn.innerText = '⏸';
+
+        play.textContent = "❚❚";
+
       } else {
+
         audio.pause();
-        playBtn.innerText = '▶';
+
+        play.textContent = "▶";
+
       }
-    }
 
-    if (audio) {
-      audio.ontimeupdate = () => {
-        if (audio.duration) {
-          const pct = (audio.currentTime / audio.duration) * 100;
-          progressBar.style.width = pct + '%';
+    });
 
-          let mins = Math.floor(audio.currentTime / 60);
-          let secs = Math.floor(audio.currentTime % 60);
 
-          currentTimeEl.innerText =
-            `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-      };
+    audio.addEventListener("timeupdate", () => {
 
-      audio.onended = () => {
-        playBtn.innerText = '▶';
-        progressBar.style.width = '0%';
-      };
-    }
-
-    function seekAudio(event) {
       if (!audio.duration) return;
 
-      const track = event.currentTarget;
-      const clickX =
-        event.clientX - track.getBoundingClientRect().left;
+      const percentage =
+        (audio.currentTime / audio.duration) * 100;
+
+      progressFill.style.width =
+        percentage + "%";
+
+      progressKnob.style.left =
+        percentage + "%";
+
+      currentTime.textContent =
+        formatTime(audio.currentTime);
+
+    });
+
+
+    audio.addEventListener("ended", () => {
+
+      play.textContent = "▶";
+
+      progressFill.style.width = "0%";
+
+      progressKnob.style.left = "0%";
+
+    });
+
+
+    progress.addEventListener("click", (event) => {
+
+      if (!audio.duration) return;
+
+      const rect =
+        progress.getBoundingClientRect();
+
+      const percentage =
+        (event.clientX - rect.left) / rect.width;
 
       audio.currentTime =
-        (clickX / track.clientWidth) * audio.duration;
+        percentage * audio.duration;
+
+    });
+
+
+    /* ================= QUESTIONS ================= */
+
+    function showAnswer(text) {
+
+      const input =
+        document.getElementById("message");
+
+      input.value = text;
+
+      input.focus();
+
     }
 
-    function toggleSpeed() {
-      const speeds = [1, 1.5, 2];
 
-      let current = parseFloat(speedBtn.innerText);
+    /* ================= CHAT ================= */
 
-      let next =
-        speeds[(speeds.indexOf(current) + 1) % speeds.length];
+    const message =
+      document.getElementById("message");
 
-      speedBtn.innerText = next + 'x';
+    const send =
+      document.getElementById("send");
 
-      if (audio) {
-        audio.playbackRate = next;
+
+    send.addEventListener("click", () => {
+
+      const text =
+        message.value.trim();
+
+      if (!text) return;
+
+      alert(
+        "Message envoyé : " + text
+      );
+
+      message.value = "";
+
+    });
+
+
+    message.addEventListener("keydown", (event) => {
+
+      if (event.key === "Enter") {
+        send.click();
       }
-    }
 
-    function copyPromo(code) {
-      navigator.clipboard.writeText(code);
+    });
 
-      toast.classList.add('show');
-
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2000);
-    }
-
-    // Automatically load published media from server
-    async function loadPublishedMedia() {
-      try {
-        const res = await fetch('/api/media');
-        const data = await res.json();
-
-        if (data.avatarUrl) {
-          document.getElementById('avatarImg').src = data.avatarUrl;
-        }
-
-        if (data.vocalUrl) {
-          audio.src = data.vocalUrl;
-
-          audio.onloadedmetadata = () => {
-            let mins = Math.floor(audio.duration / 60);
-            let secs = Math.floor(audio.duration % 60);
-
-            totalDurationEl.innerText =
-              `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-          };
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    window.addEventListener(
-      'DOMContentLoaded',
-      loadPublishedMedia
-    );
   </script>
 
 </body>
 </html>
-```

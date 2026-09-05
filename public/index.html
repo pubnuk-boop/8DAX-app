@@ -3,197 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>8DAX Apple of Fortune</title>
+  <title>Mopizor Apple Fortune</title>
+
   <style>
+    :root {
+      --bg-color: #fcf4f4;
+      --card-bg: #ffffff;
+      --text-dark: #2c1a1a;
+      --text-muted: #8c7373;
+      --accent-red: #d9383a;
+      --accent-light: #fbebe9;
+      --border-color: #f3dcdb;
+      --green-status: #34c759;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      background-color: #f7eded;
+      background-color: #e5e5e5;
       display: flex;
       justify-content: center;
       min-height: 100vh;
-      color: #333;
     }
 
     .app-container {
       width: 100%;
-      max-width: 480px;
-      background-color: #f7eded;
+      max-width: 430px;
+      background-color: var(--bg-color);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       position: relative;
-      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
 
-    /* Header */
+    .top-bar {
+      height: 4px;
+      background-color: var(--accent-red);
+      width: 100%;
+    }
+
+    /* HEADER */
+
     .header {
-      background: #ffffff;
-      padding: 12px 16px;
+      background: var(--card-bg);
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #ebdada;
+      border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 10;
     }
 
-    .header-profile {
+    .header-left {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .avatar-wrapper {
+    .avatar-container {
       position: relative;
       width: 44px;
       height: 44px;
     }
 
-    .avatar {
-      width: 44px;
-      height: 44px;
+    .avatar-img {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid #d9383a;
+      border: 1px solid var(--border-color);
     }
 
     .status-dot {
       position: absolute;
-      bottom: 0;
-      right: 0;
+      bottom: 1px;
+      right: 1px;
       width: 12px;
       height: 12px;
-      background-color: #4cd964;
-      border: 2px solid #ffffff;
+      background-color: var(--green-status);
       border-radius: 50%;
+      border: 2px solid white;
     }
 
-    .profile-info h1 {
-      font-size: 0.95rem;
+    .header-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-title {
+      font-size: 0.98rem;
       font-weight: 700;
-      color: #262626;
-      margin-bottom: 2px;
+      color: var(--text-dark);
     }
 
-    .profile-info p {
-      font-size: 0.75rem;
-      color: #4cd964;
+    .header-status {
+      font-size: 0.78rem;
+      color: var(--green-status);
       font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .menu-icon {
+    .menu-btn {
+      background: none;
+      border: none;
       font-size: 1.4rem;
-      color: #555;
+      color: #665252;
       cursor: pointer;
     }
 
-    /* Toast Notification */
-    .toast {
-      position: fixed;
-      top: 70px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #d9383a;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-      z-index: 1000;
-      box-shadow: 0 4px 12px rgba(217, 56, 58, 0.3);
-    }
+    /* CHAT */
 
-    .toast.show {
-      opacity: 1;
-    }
-
-    /* Content Area */
-    .content {
-      flex: 1;
+    .chat-body {
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
+      flex: 1;
       padding-bottom: 90px;
     }
 
-    /* Message Bubble */
     .message-bubble {
-      background: #ffffff;
-      border-radius: 18px;
-      border-top-left-radius: 4px;
-      padding: 14px 16px;
-      font-size: 0.9rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 14px 18px;
+      font-size: 0.92rem;
       line-height: 1.45;
-      color: #2c2c2c;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-      border: 1px solid #f0e2e2;
+      color: var(--text-dark);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.01);
+      max-width: 88%;
     }
 
-    /* Audio Card */
+    /* AUDIO */
+
     .audio-card {
-      background: #ffffff;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       border-radius: 20px;
-      padding: 12px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-      border: 1px solid #f0e2e2;
-      max-width: 310px;
+      padding: 12px 14px;
+      width: 80%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.01);
+      position: relative;
     }
 
     .audio-header {
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
       font-size: 0.8rem;
-      color: #8c7373;
+      color: var(--accent-red);
       font-weight: 600;
-    }
-
-    .audio-header-icon {
-      width: 18px;
-      height: 18px;
-      background-color: #d9383a;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 0.55rem;
+      margin-bottom: 8px;
     }
 
     .audio-controls {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .play-button {
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      background-color: #d9383a;
+      background-color: var(--accent-red);
       border: none;
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       cursor: pointer;
       flex-shrink: 0;
-      padding-left: 3px;
     }
 
     .waveform-container {
@@ -204,85 +196,76 @@
     }
 
     .audio-track {
+      width: 100%;
       height: 6px;
-      background-color: #f2e1e1;
+      background: #f3dcdb;
       border-radius: 3px;
       position: relative;
       cursor: pointer;
     }
 
     .audio-progress {
-      height: 100%;
-      background-color: #d9383a;
-      border-radius: 3px;
       width: 0%;
+      height: 100%;
+      background: var(--accent-red);
+      border-radius: 3px;
       position: relative;
-    }
-
-    .audio-progress::after {
-      content: '';
-      position: absolute;
-      right: -5px;
-      top: -3px;
-      width: 12px;
-      height: 12px;
-      background-color: #d9383a;
-      border-radius: 50%;
     }
 
     .audio-time {
       display: flex;
       justify-content: space-between;
-      font-size: 0.7rem;
-      color: #a38d8d;
+      font-size: 0.72rem;
+      color: var(--text-muted);
     }
 
     .speed-tag {
-      background-color: #fcebeb;
-      color: #d9383a;
-      font-size: 0.7rem;
+      background: #fbebe9;
+      color: var(--accent-red);
+      font-size: 0.75rem;
+      padding: 4px 7px;
+      border-radius: 10px;
       font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 8px;
-      cursor: pointer;
       border: none;
+      cursor: pointer;
     }
 
-    /* FAQ Buttons */
+    /* FAQ */
+
     .faq-buttons {
       display: flex;
-      flex-wrap: wrap;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .faq-chip {
-      background-color: #ffffff;
-      border: 1px solid #e0c8c8;
-      color: #d9383a;
-      padding: 8px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       border-radius: 20px;
-      font-size: 0.78rem;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: var(--accent-red);
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
     }
 
-    /* Platforms Container */
+    /* PLATFORMS */
+
     .platforms-card {
-      background: #fcf6f6;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       border-radius: 20px;
       padding: 16px;
-      border: 1px solid #ebdada;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .platforms-title {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      color: #a38d8d;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
+      color: #a08a8a;
       text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 12px;
     }
 
     .platforms-grid {
@@ -293,57 +276,70 @@
 
     .platform-btn {
       background: #ffffff;
-      border: 1px solid #ebdada;
-      border-radius: 20px;
-      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 7px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      cursor: pointer;
-      font-size: 0.72rem;
+      color: var(--text-dark);
+      font-size: 0.78rem;
       font-weight: 700;
-      color: #333;
+      cursor: pointer;
+      min-width: 0;
     }
 
     .platform-left {
       display: flex;
       align-items: center;
       gap: 4px;
+      min-width: 0;
+      width: 100%;
     }
 
     .platform-code {
-      color: #d9383a;
-      margin-left: 2px;
+      color: var(--accent-red);
+      font-weight: 800;
+      white-space: nowrap;
     }
 
-    .copy-icon {
-      color: #b59b9b;
-      font-size: 0.8rem;
+    .copy-icon-box {
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 2px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #faf4f4;
+      color: #8c99ad;
+      margin-left: auto;
+      flex-shrink: 0;
     }
 
-    /* Bottom Input Bar */
-    .chat-input-bar {
+    /* INPUT */
+
+    .input-bar {
       position: fixed;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
-      max-width: 480px;
-      background: #f7eded;
-      padding: 12px 16px;
+      max-width: 430px;
+      background: var(--bg-color);
+      padding: 10px 16px 16px 16px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .chat-input {
+    .input-field {
       flex: 1;
-      background: #ffffff;
-      border: 1px solid #ebdada;
-      border-radius: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 25px;
       padding: 12px 18px;
-      font-size: 0.85rem;
-      color: #888;
+      font-size: 0.9rem;
+      color: var(--text-dark);
       outline: none;
     }
 
@@ -351,191 +347,596 @@
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      background-color: #f2cece;
+      background: #f7dcdb;
       border: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
-      font-size: 0.9rem;
       cursor: pointer;
+    }
+
+    .send-btn svg {
+      fill: #d9383a;
+      width: 18px;
+      height: 18px;
+      transform: rotate(45deg);
+    }
+
+    /* TOAST */
+
+    .toast {
+      position: fixed;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(44, 26, 26, 0.9);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
     }
   </style>
 </head>
+
 <body>
 
   <div class="app-container">
-    <!-- Header -->
+
+    <div class="top-bar"></div>
+
+    <!-- HEADER -->
     <div class="header">
-      <div class="header-profile">
-        <div class="avatar-wrapper">
-          <img id="profilePic" class="avatar" src="https://via.placeholder.com/150" alt="Profile">
+
+      <div class="header-left">
+
+        <div class="avatar-container">
+          <img
+            id="avatarImg"
+            class="avatar-img"
+            src="https://via.placeholder.com/100/d9383a/ffffff?text=8DAX"
+            alt="Avatar"
+          >
+
           <div class="status-dot"></div>
         </div>
-        <div class="profile-info">
-          <h1>8DAX Apple Fortune</h1>
-          <p>• En ligne</p>
+
+        <div class="header-info">
+          <div class="header-title">
+            Mopizor Apple Fortune
+          </div>
+
+          <div class="header-status">
+            ● &nbsp;En ligne
+          </div>
         </div>
+
       </div>
-      <div class="menu-icon">⋮</div>
+
+      <button class="menu-btn">≡</button>
+
     </div>
 
-    <div id="toast" class="toast">Code promo 8DAX copié !</div>
 
-    <!-- Main Chat Content -->
-    <div class="content">
+    <!-- CHAT BODY -->
+    <div class="chat-body">
+
+      <!-- MESSAGE -->
       <div class="message-bubble">
+
         Salut ! Tu t'intéresses à l'Apple of Fortune ? Tu es au bon endroit. 👌
+
         <br><br>
+
         Avant de poser tes questions écoute d'abord le vocal suivant
+
       </div>
 
-      <!-- Audio Card -->
+
+      <!-- AUDIO -->
       <div class="audio-card">
+
         <div class="audio-header">
-          <div class="audio-header-icon">🎙</div>
-          <span>Message vocal</span>
+          <span>🔴 Message vocal</span>
         </div>
-        <div class="audio-controls">
-          <button class="play-button" id="playBtn" onclick="toggleAudio()">▶</button>
-          <div class="waveform-container">
-            <div class="audio-track" onclick="seekAudio(event)">
-              <div class="audio-progress" id="progressBar"></div>
+
+        <div id="audioPlayerContainer">
+
+          <div class="audio-controls">
+
+            <button
+              class="play-button"
+              id="playBtn"
+              onclick="toggleAudio()"
+            >
+              ▶
+            </button>
+
+            <div class="waveform-container">
+
+              <div
+                class="audio-track"
+                onclick="seekAudio(event)"
+              >
+                <div
+                  class="audio-progress"
+                  id="progressBar"
+                ></div>
+              </div>
+
+              <div class="audio-time">
+
+                <span id="currentTime">
+                  0:00
+                </span>
+
+                <span id="totalDuration">
+                  0:00
+                </span>
+
+              </div>
+
             </div>
-            <div class="audio-time">
-              <span id="currentTime">0:00</span>
-              <span id="totalDuration">0:00</span>
-            </div>
+
+            <button
+              class="speed-tag"
+              id="speedBtn"
+              onclick="toggleSpeed()"
+            >
+              1x
+            </button>
+
           </div>
-          <button class="speed-tag" id="speedBtn" onclick="toggleSpeed()">1x</button>
+
         </div>
+
         <audio id="vocalAudio" src=""></audio>
+
       </div>
 
-      <!-- FAQ Chips -->
+
+      <!-- FAQ -->
       <div class="faq-buttons">
-        <div class="faq-chip" onclick="copyPromo('8DAX')">Comment gagner à Apple of Fortune ?</div>
-        <div class="faq-chip" onclick="copyPromo('8DAX')">Comment m'inscrire ?</div>
-      </div>
 
-      <!-- Standalone Promo Box -->
-      <div style="background: #ffffff; border: 1.5px dashed #d9383a; border-radius: 16px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px;">
-        <div>
-          <div style="font-size: 0.65rem; color: #8c7373; font-weight: 700; text-transform: uppercase;">CODE PROMO OFFICIEL</div>
-          <div style="font-size: 1.2rem; font-weight: 800; color: #d9383a; letter-spacing: 1px;">8DAX</div>
+        <div
+          class="faq-chip"
+          onclick="copyPromo('8DAX')"
+        >
+          Comment gagner à Apple of Fortune ?
         </div>
-        <button onclick="copyPromo('8DAX')" style="background: #d9383a; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
-          Copier
-        </button>
+
+        <div
+          class="faq-chip"
+          onclick="copyPromo('8DAX')"
+        >
+          Comment m'inscrire ?
+        </div>
+
       </div>
 
-      <!-- Platforms Grid -->
+
+      <!-- PLATFORMS -->
       <div class="platforms-card">
-        <div class="platforms-title">PLATEFORMES RECOMMANDÉES</div>
+
+        <div class="platforms-title">
+          PLATEFORMES RECOMMANDÉES
+        </div>
+
         <div class="platforms-grid">
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left"><span>↗</span> 1XBET <span class="platform-code">8DAX</span></div>
-            <span class="copy-icon">❐</span>
+
+
+          <!-- 1XBET -->
+          <div
+            class="platform-btn"
+            onclick="copyPromo('8DAX')"
+          >
+            <div class="platform-left">
+
+              <span>↗</span>
+
+              <span>1XBET</span>
+
+              <span class="platform-code">
+                8DAX
+              </span>
+
+              <span class="copy-icon-box">
+                ⧉
+              </span>
+
+            </div>
           </div>
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left"><span>↗</span> MELBET <span class="platform-code">8DAX</span></div>
-            <span class="copy-icon">❐</span>
+
+
+          <!-- MELBET -->
+          <div
+            class="platform-btn"
+            onclick="copyPromo('8DAX')"
+          >
+            <div class="platform-left">
+
+              <span>↗</span>
+
+              <span>MELBET</span>
+
+              <span class="platform-code">
+                8DAX
+              </span>
+
+              <span class="copy-icon-box">
+                ⧉
+              </span>
+
+            </div>
           </div>
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left"><span>↗</span> BETWINNER <span class="platform-code">8DAX</span></div>
-            <span class="copy-icon">❐</span>
+
+
+          <!-- BETWINNER -->
+          <div
+            class="platform-btn"
+            onclick="copyPromo('8DAX')"
+          >
+            <div class="platform-left">
+
+              <span>↗</span>
+
+              <span>BETWINNER</span>
+
+              <span class="platform-code">
+                8DAX
+              </span>
+
+              <span class="copy-icon-box">
+                ⧉
+              </span>
+
+            </div>
           </div>
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left"><span>↗</span> WINWIN <span class="platform-code">8DAX</span></div>
-            <span class="copy-icon">❐</span>
+
+
+          <!-- 888STARZ -->
+          <div
+            class="platform-btn"
+            onclick="copyPromo('8DAX')"
+          >
+            <div class="platform-left">
+
+              <span>↗</span>
+
+              <span>888STARZ</span>
+
+              <span class="platform-code">
+                8DAX
+              </span>
+
+              <span class="copy-icon-box">
+                ⧉
+              </span>
+
+            </div>
           </div>
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left"><span>↗</span> PARIPESA <span class="platform-code">8DAX</span></div>
-            <span class="copy-icon">❐</span>
+
+
+          <!-- PARIPESA -->
+          <div
+            class="platform-btn"
+            onclick="copyPromo('8DAX')"
+          >
+            <div class="platform-left">
+
+              <span>↗</span>
+
+              <span>PARIPESA</span>
+
+              <span class="platform-code">
+                8DAX
+              </span>
+
+              <span class="copy-icon-box">
+                ⧉
+              </span>
+
+            </div>
           </div>
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left"><span>↗</span> 888STARZ <span class="platform-code">8DAX</span></div>
-            <span class="copy-icon">❐</span>
+
+
+          <!-- WINWIN -->
+          <div
+            class="platform-btn"
+            onclick="copyPromo('8DAX')"
+          >
+            <div class="platform-left">
+
+              <span>↗</span>
+
+              <span>WINWIN</span>
+
+              <span class="platform-code">
+                8DAX
+              </span>
+
+              <span class="copy-icon-box">
+                ⧉
+              </span>
+
+            </div>
           </div>
+
+
         </div>
       </div>
+
     </div>
 
-    <!-- Bottom Input -->
-    <div class="chat-input-bar">
-      <input type="text" class="chat-input" placeholder="Écrivez votre message..." readonly onclick="copyPromo('8DAX')">
-      <button class="send-btn" onclick="copyPromo('8DAX')">➤</button>
+
+    <!-- INPUT BAR -->
+    <div class="input-bar">
+
+      <input
+        type="text"
+        class="input-field"
+        placeholder="Écrivez votre message..."
+      >
+
+      <button class="send-btn">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+        </svg>
+
+      </button>
+
     </div>
+
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">
+      Code promo 8DAX copié !
+    </div>
+
   </div>
 
+
   <script>
-    const audio = document.getElementById('vocalAudio');
-    const playBtn = document.getElementById('playBtn');
-    const progressBar = document.getElementById('progressBar');
-    const currentTimeEl = document.getElementById('currentTime');
-    const totalDurationEl = document.getElementById('totalDuration');
-    const speedBtn = document.getElementById('speedBtn');
-    const speeds = [1, 1.5, 2];
-    let speedIndex = 0;
 
-    // Fetch dynamic media uploaded via Admin Panel
-    async function loadMedia() {
-      try {
-        const res = await fetch('/api/media');
-        const data = await res.json();
-        if (data.profilePic) document.getElementById('profilePic').src = data.profilePic;
-        if (data.voiceNote) audio.src = data.voiceNote;
-      } catch (e) {
-        console.error('Error loading media:', e);
-      }
-    }
-    loadMedia();
+    const audio =
+      document.getElementById('vocalAudio');
 
-    function copyPromo(code) {
-      navigator.clipboard.writeText(code);
-      const toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
-    }
+    const playBtn =
+      document.getElementById('playBtn');
+
+    const progressBar =
+      document.getElementById('progressBar');
+
+    const currentTimeEl =
+      document.getElementById('currentTime');
+
+    const totalDurationEl =
+      document.getElementById('totalDuration');
+
+    const speedBtn =
+      document.getElementById('speedBtn');
+
+    const toast =
+      document.getElementById('toast');
+
+
+    /* AUDIO PLAY */
 
     function toggleAudio() {
+
+      if (!audio.src) return;
+
       if (audio.paused) {
+
         audio.play();
-        playBtn.innerText = '❚❚';
+
+        playBtn.innerText = '⏸';
+
       } else {
+
         audio.pause();
+
         playBtn.innerText = '▶';
+
       }
     }
 
-    audio.ontimeupdate = () => {
-      const pct = (audio.currentTime / audio.duration) * 100;
-      progressBar.style.width = (pct || 0) + '%';
-      currentTimeEl.innerText = formatTime(audio.currentTime);
-    };
 
-    audio.onloadedmetadata = () => {
-      totalDurationEl.innerText = formatTime(audio.duration);
-    };
+    /* AUDIO PROGRESS */
 
-    function seekAudio(e) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const pos = (e.clientX - rect.left) / rect.width;
-      audio.currentTime = pos * audio.duration;
+    if (audio) {
+
+      audio.ontimeupdate = () => {
+
+        if (audio.duration) {
+
+          const pct =
+            (audio.currentTime / audio.duration) * 100;
+
+          progressBar.style.width =
+            pct + '%';
+
+
+          let mins =
+            Math.floor(audio.currentTime / 60);
+
+          let secs =
+            Math.floor(audio.currentTime % 60);
+
+          currentTimeEl.innerText =
+            `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+        }
+
+      };
+
+
+      audio.onended = () => {
+
+        playBtn.innerText = '▶';
+
+        progressBar.style.width = '0%';
+
+      };
+
     }
+
+
+    /* AUDIO SEEK */
+
+    function seekAudio(event) {
+
+      if (!audio.duration) return;
+
+      const track =
+        event.currentTarget;
+
+      const clickX =
+        event.clientX -
+        track.getBoundingClientRect().left;
+
+      audio.currentTime =
+        (clickX / track.clientWidth) *
+        audio.duration;
+
+    }
+
+
+    /* AUDIO SPEED */
 
     function toggleSpeed() {
-      speedIndex = (speedIndex + 1) % speeds.length;
-      audio.playbackRate = speeds[speedIndex];
-      speedBtn.innerText = speeds[speedIndex] + 'x';
+
+      const speeds = [1, 1.5, 2];
+
+      let current =
+        parseFloat(speedBtn.innerText);
+
+      let next =
+        speeds[
+          (speeds.indexOf(current) + 1) %
+          speeds.length
+        ];
+
+      speedBtn.innerText =
+        next + 'x';
+
+      if (audio) {
+        audio.playbackRate = next;
+      }
+
     }
 
-    function formatTime(sec) {
-      if (isNaN(sec)) return '0:00';
-      const m = Math.floor(sec / 60);
-      const s = Math.floor(sec % 60);
-      return `${m}:${s < 10 ? '0' : ''}${s}`;
+
+    /* COPY PROMO */
+
+    function copyPromo(code) {
+
+      if (
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+      ) {
+
+        navigator.clipboard.writeText(code);
+
+      } else {
+
+        const textarea =
+          document.createElement('textarea');
+
+        textarea.value = code;
+
+        document.body.appendChild(textarea);
+
+        textarea.select();
+
+        document.execCommand('copy');
+
+        textarea.remove();
+
+      }
+
+
+      toast.innerText =
+        'Code promo ' + code + ' copié !';
+
+      toast.classList.add('show');
+
+
+      setTimeout(() => {
+
+        toast.classList.remove('show');
+
+      }, 2000);
+
     }
+
+
+    /* LOAD PUBLISHED MEDIA */
+
+    async function loadPublishedMedia() {
+
+      try {
+
+        const res =
+          await fetch('/api/media');
+
+        const data =
+          await res.json();
+
+
+        if (data.avatarUrl) {
+
+          document.getElementById(
+            'avatarImg'
+          ).src = data.avatarUrl;
+
+        }
+
+
+        if (data.vocalUrl) {
+
+          audio.src =
+            data.vocalUrl;
+
+
+          audio.onloadedmetadata = () => {
+
+            let mins =
+              Math.floor(audio.duration / 60);
+
+            let secs =
+              Math.floor(audio.duration % 60);
+
+            totalDurationEl.innerText =
+              `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+          };
+
+        }
+
+      } catch (err) {
+
+        console.error(err);
+
+      }
+
+    }
+
+
+    window.addEventListener(
+      'DOMContentLoaded',
+      loadPublishedMedia
+    );
+
   </script>
+
 </body>
 </html>

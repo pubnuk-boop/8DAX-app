@@ -3,991 +3,539 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Mopizor — Assistant</title>
-
+  <title>8DAX Apple of Fortune</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #fff7f5;
-      color: #76272c;
+      background-color: #f7eded;
+      display: flex;
+      justify-content: center;
       min-height: 100vh;
+      color: #333;
     }
 
-    /* ================= HEADER ================= */
-
-    header {
-      height: 138px;
-      background: #fff;
-      border-top: 5px solid #d9272e;
-      border-bottom: 2px solid #f2d4d4;
-
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      background-color: #f7eded;
       display: flex;
-      align-items: center;
-      padding: 0 46px;
-
-      box-shadow: 0 2px 7px rgba(130, 40, 40, .08);
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
     }
 
-    .profile {
+    /* Header */
+    .header {
+      background: #ffffff;
+      padding: 12px 16px;
       display: flex;
       align-items: center;
-      gap: 20px;
+      justify-content: space-between;
+      border-bottom: 1px solid #ebdada;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .avatar-wrapper {
       position: relative;
-      width: 92px;
-      height: 92px;
+      width: 44px;
+      height: 44px;
     }
 
     .avatar {
-      width: 92px;
-      height: 92px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       object-fit: cover;
-      border: 4px solid #d9272e;
-      display: block;
-    }
-
-    .online-dot {
-      position: absolute;
-      width: 29px;
-      height: 29px;
-      right: -1px;
-      bottom: 0;
-
-      background: #25c878;
-      border-radius: 50%;
-      border: 3px solid white;
-    }
-
-    .profile-info h1 {
-      font-size: 28px;
-      font-weight: 600;
-      color: #78292d;
-      margin-bottom: 8px;
-    }
-
-    .status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 22px;
-      color: #8a3438;
+      border: 2px solid #d9383a;
     }
 
     .status-dot {
-      width: 13px;
-      height: 13px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 12px;
+      height: 12px;
+      background-color: #4cd964;
+      border: 2px solid #ffffff;
       border-radius: 50%;
-      background: #4bcf91;
     }
 
-    .hamburger {
-      margin-left: auto;
-      width: 42px;
-      height: 42px;
+    .profile-info h1 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #262626;
+      margin-bottom: 2px;
+    }
 
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 7px;
+    .profile-info p {
+      font-size: 0.75rem;
+      color: #4cd964;
+      font-weight: 500;
+    }
 
+    .menu-icon {
+      font-size: 1.4rem;
+      color: #555;
       cursor: pointer;
     }
 
-    .hamburger span {
-      display: block;
-      width: 35px;
-      height: 4px;
-      border-radius: 4px;
-      background: #6c7585;
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #d9383a;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(217, 56, 58, 0.3);
     }
 
-    /* ================= MAIN ================= */
-
-    main {
-      padding: 34px 29px 160px;
-      max-width: 900px;
-      margin: auto;
+    .toast.show {
+      opacity: 1;
     }
 
-    /* ================= INTRO ================= */
-
-    .intro {
-      background: #fff;
-
-      border: 2px solid #f1cfd0;
-      border-radius: 27px;
-
-      padding: 28px 31px;
-
-      box-shadow: 0 3px 8px rgba(100, 30, 30, .10);
-
-      font-size: 27px;
-      line-height: 1.55;
-
-      margin-bottom: 27px;
+    /* Content Area */
+    .content {
+      flex: 1;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-bottom: 90px;
     }
 
-    .intro p + p {
-      margin-top: 20px;
+    /* Message Bubble */
+    .message-bubble {
+      background: #ffffff;
+      border-radius: 18px;
+      border-top-left-radius: 4px;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      color: #2c2c2c;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      border: 1px solid #f0e2e2;
     }
 
-    /* ================= AUDIO ================= */
-
+    /* Audio Card */
     .audio-card {
-      background: #fff;
-
-      border: 2px solid #f1cfd0;
-      border-radius: 27px;
-
-      padding: 25px 27px;
-
-      box-shadow: 0 3px 8px rgba(100, 30, 30, .09);
-
-      margin-bottom: 25px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      border: 1px solid #f0e2e2;
+      max-width: 310px;
     }
 
-    .audio-title {
+    .audio-header {
       display: flex;
       align-items: center;
-      gap: 13px;
-
-      color: #687488;
-      font-size: 25px;
-      margin-bottom: 17px;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: #8c7373;
+      font-weight: 600;
     }
 
-    .mic {
-      width: 40px;
-      height: 40px;
+    .audio-header-icon {
+      width: 18px;
+      height: 18px;
+      background-color: #d9383a;
       border-radius: 50%;
-
-      background: #d72c32;
-      color: white;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
-      font-size: 21px;
+      color: white;
+      font-size: 0.55rem;
     }
 
     .audio-controls {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 12px;
     }
 
     .play-button {
-      flex: 0 0 auto;
-
-      width: 80px;
-      height: 80px;
-
-      border: none;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-
-      background: #df272e;
+      background-color: #d9383a;
+      border: none;
       color: white;
-
-      font-size: 35px;
-      cursor: pointer;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
-      padding-left: 6px;
-
-      box-shadow: 0 2px 5px rgba(120, 20, 20, .15);
+      font-size: 0.9rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding-left: 3px;
     }
 
-    .audio-progress-area {
+    .waveform-container {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .progress {
-      width: 100%;
-      height: 8px;
-      background: #f2c8ca;
-      border-radius: 10px;
+    .audio-track {
+      height: 6px;
+      background-color: #f2e1e1;
+      border-radius: 3px;
       position: relative;
       cursor: pointer;
     }
 
-    .progress-fill {
-      width: 0%;
+    .audio-progress {
       height: 100%;
-      background: #df272e;
-      border-radius: 10px;
+      background-color: #d9383a;
+      border-radius: 3px;
+      width: 0%;
+      position: relative;
     }
 
-    .progress-knob {
+    .audio-progress::after {
+      content: '';
       position: absolute;
-      left: 0;
-      top: 50%;
-
-      width: 29px;
-      height: 29px;
-
-      transform: translate(-2px, -50%);
-
+      right: -5px;
+      top: -3px;
+      width: 12px;
+      height: 12px;
+      background-color: #d9383a;
       border-radius: 50%;
-      background: #df272e;
-
-      border: 5px solid #f6d6d7;
     }
 
-    .time-row {
+    .audio-time {
       display: flex;
       justify-content: space-between;
-
-      margin-top: 9px;
-
-      font-size: 21px;
-      color: #8b96a6;
+      font-size: 0.7rem;
+      color: #a38d8d;
     }
 
-    .speed {
-      width: 72px;
-      height: 49px;
-
-      border-radius: 12px;
-
-      background: #f9dddd;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      color: #df272e;
-      font-size: 19px;
-      font-weight: bold;
-    }
-
-    /* ================= FAQ BUTTONS ================= */
-
-    .questions {
-      display: flex;
-      gap: 18px;
-
-      margin-bottom: 365px;
-    }
-
-    .question {
-      flex: 1;
-
-      min-height: 67px;
-
-      padding: 12px 23px;
-
-      border: 2px solid #f0c8ca;
-      border-radius: 35px;
-
-      background: #fff;
-
-      color: #bd3035;
-
-      font-size: 22px;
-      font-weight: 600;
-
+    .speed-tag {
+      background-color: #fcebeb;
+      color: #d9383a;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 8px;
       cursor: pointer;
-
-      transition: .2s;
+      border: none;
     }
 
-    .question:hover {
-      background: #fff0ef;
-    }
-
-    /* ================= INFORMATION BOX ================= */
-
-    .info-box {
-      background: #fff9f8;
-
-      border: 2px solid #f1cfd0;
-      border-radius: 27px;
-
-      padding: 27px;
-
-      box-shadow: 0 3px 8px rgba(100, 30, 30, .08);
-
-      margin-bottom: 30px;
-    }
-
-    .info-title {
-      color: #aab4c6;
-
-      font-size: 19px;
-      font-weight: bold;
-
-      letter-spacing: 3px;
-
-      margin-bottom: 22px;
-    }
-
-    .info-list {
+    /* FAQ Buttons */
+    .faq-buttons {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 8px;
     }
 
-    .info-item {
-      background: #fff;
-
-      border: 2px solid #f1cfd0;
-
-      border-radius: 30px;
-
-      padding: 13px 22px;
-
-      color: #8c3a3f;
-
-      font-size: 19px;
-      font-weight: bold;
+    .faq-chip {
+      background-color: #ffffff;
+      border: 1px solid #e0c8c8;
+      color: #d9383a;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
     }
 
-    /* ================= CHAT ================= */
+    /* Platforms Container */
+    .platforms-card {
+      background: #fcf6f6;
+      border-radius: 20px;
+      padding: 16px;
+      border: 1px solid #ebdada;
+      margin-top: 10px;
+    }
 
-    .chat {
+    .platforms-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #a38d8d;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .platform-btn {
+      background: #ffffff;
+      border: 1px solid #ebdada;
+      border-radius: 20px;
+      padding: 8px 12px;
       display: flex;
       align-items: center;
-      gap: 16px;
-
-      position: fixed;
-
-      left: 29px;
-      right: 29px;
-      bottom: 22px;
-
-      max-width: 842px;
-      margin: auto;
-    }
-
-    .message-input {
-      flex: 1;
-
-      height: 74px;
-
-      border: 2px solid #f0c8ca;
-      border-radius: 40px;
-
-      background: #fffafa;
-
-      padding: 0 32px;
-
-      font-size: 22px;
-      outline: none;
-
-      color: #763136;
-    }
-
-    .message-input::placeholder {
-      color: #ca9a9d;
-    }
-
-    .send {
-      width: 78px;
-      height: 78px;
-
-      border: none;
-      border-radius: 50%;
-
-      background: #f5aeb2;
-
-      color: white;
-
-      font-size: 32px;
-
+      justify-content: space-between;
       cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #333;
+    }
 
+    .platform-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .platform-code {
+      color: #d9383a;
+      margin-left: 2px;
+    }
+
+    .copy-icon {
+      color: #b59b9b;
+      font-size: 0.8rem;
+    }
+
+    /* Bottom Input Bar */
+    .chat-input-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: #f7eded;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid #ebdada;
+      border-radius: 24px;
+      padding: 12px 18px;
+      font-size: 0.85rem;
+      color: #888;
+      outline: none;
+    }
+
+    .send-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: #f2cece;
+      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    /* ================= MENU ================= */
-
-    .menu {
-      display: none;
-
-      position: absolute;
-      right: 25px;
-      top: 115px;
-
-      width: 230px;
-
-      background: white;
-
-      border: 1px solid #f0cccc;
-      border-radius: 15px;
-
-      box-shadow: 0 8px 30px rgba(0,0,0,.12);
-
-      padding: 10px;
-
-      z-index: 10;
-    }
-
-    .menu.active {
-      display: block;
-    }
-
-    .menu div {
-      padding: 14px;
-
-      border-radius: 10px;
-
+      color: #ffffff;
+      font-size: 0.9rem;
       cursor: pointer;
-      color: #763136;
-      font-size: 17px;
-    }
-
-    .menu div:hover {
-      background: #fff0ef;
-    }
-
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 650px) {
-
-      header {
-        height: 138px;
-        padding: 0 28px;
-      }
-
-      .avatar-wrapper,
-      .avatar {
-        width: 92px;
-        height: 92px;
-      }
-
-      .profile-info h1 {
-        font-size: 26px;
-      }
-
-      .status {
-        font-size: 21px;
-      }
-
-      main {
-        padding: 33px 24px 145px;
-      }
-
-      .intro {
-        font-size: 26px;
-        padding: 24px 30px;
-      }
-
-      .audio-card {
-        padding: 23px;
-      }
-
-      .audio-controls {
-        gap: 15px;
-      }
-
-      .play-button {
-        width: 78px;
-        height: 78px;
-      }
-
-      .speed {
-        display: none;
-      }
-
-      .questions {
-        gap: 15px;
-        margin-bottom: 365px;
-      }
-
-      .question {
-        font-size: 20px;
-        padding: 10px 18px;
-      }
-
-      .info-box {
-        padding: 25px;
-      }
-
-      .info-list {
-        gap: 12px;
-      }
-
-      .info-item {
-        font-size: 17px;
-        padding: 11px 17px;
-      }
-
-      .chat {
-        left: 24px;
-        right: 24px;
-      }
-
-      .message-input {
-        height: 68px;
-        font-size: 19px;
-        padding: 0 25px;
-      }
-
-      .send {
-        width: 70px;
-        height: 70px;
-      }
-    }
-
-    @media (max-width: 450px) {
-
-      .profile {
-        gap: 13px;
-      }
-
-      .avatar-wrapper,
-      .avatar {
-        width: 80px;
-        height: 80px;
-      }
-
-      .online-dot {
-        width: 27px;
-        height: 27px;
-      }
-
-      .profile-info h1 {
-        font-size: 22px;
-      }
-
-      .status {
-        font-size: 18px;
-      }
-
-      .hamburger span {
-        width: 32px;
-      }
-
-      .intro {
-        font-size: 22px;
-        line-height: 1.55;
-      }
-
-      .questions {
-        flex-direction: column;
-        margin-bottom: 330px;
-      }
-
-      .question {
-        width: 100%;
-      }
-
-      .audio-title {
-        font-size: 21px;
-      }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- ================= HEADER ================= -->
-
-  <header>
-
-    <div class="profile">
-
-      <div class="avatar-wrapper">
-        <img
-          class="avatar"
-          src="avatar.jpg"
-          alt="Profil"
-        >
-
-        <div class="online-dot"></div>
-      </div>
-
-      <div class="profile-info">
-        <h1>Mopizor Assistant</h1>
-
-        <div class="status">
-          <span class="status-dot"></span>
-          En ligne
+  <div class="app-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-profile">
+        <div class="avatar-wrapper">
+          <img id="profilePic" class="avatar" src="https://via.placeholder.com/150" alt="Profile">
+          <div class="status-dot"></div>
+        </div>
+        <div class="profile-info">
+          <h1>8DAX Apple Fortune</h1>
+          <p>• En ligne</p>
         </div>
       </div>
-
+      <div class="menu-icon">⋮</div>
     </div>
 
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <div id="toast" class="toast">Code promo 8DAX copié !</div>
 
-  </header>
-
-  <!-- ================= MENU ================= -->
-
-  <div class="menu" id="menu">
-    <div>Accueil</div>
-    <div>Informations</div>
-    <div>Questions fréquentes</div>
-    <div>Contact</div>
-  </div>
-
-
-  <!-- ================= MAIN ================= -->
-
-  <main>
-
-    <!-- INTRO -->
-
-    <section class="intro">
-
-      <p>
-        Salut ! Tu es au bon endroit. 👌
-      </p>
-
-      <p>
-        Avant de poser tes questions écoute d'abord
-        le vocal suivant
-      </p>
-
-    </section>
-
-
-    <!-- AUDIO -->
-
-    <section class="audio-card">
-
-      <div class="audio-title">
-
-        <div class="mic">
-          🎙
-        </div>
-
-        <span>Message vocal</span>
-
+    <!-- Main Chat Content -->
+    <div class="content">
+      <div class="message-bubble">
+        Salut ! Tu t'intéresses à l'Apple of Fortune ? Tu es au bon endroit. 👌
+        <br><br>
+        Avant de poser tes questions écoute d'abord le vocal suivant
       </div>
 
-      <div class="audio-controls">
+      <!-- Audio Card -->
+      <div class="audio-card">
+        <div class="audio-header">
+          <div class="audio-header-icon">🎙</div>
+          <span>Message vocal</span>
+        </div>
+        <div class="audio-controls">
+          <button class="play-button" id="playBtn" onclick="toggleAudio()">▶</button>
+          <div class="waveform-container">
+            <div class="audio-track" onclick="seekAudio(event)">
+              <div class="audio-progress" id="progressBar"></div>
+            </div>
+            <div class="audio-time">
+              <span id="currentTime">0:00</span>
+              <span id="totalDuration">0:00</span>
+            </div>
+          </div>
+          <button class="speed-tag" id="speedBtn" onclick="toggleSpeed()">1x</button>
+        </div>
+        <audio id="vocalAudio" src=""></audio>
+      </div>
 
-        <button class="play-button" id="play">
-          ▶
+      <!-- FAQ Chips -->
+      <div class="faq-buttons">
+        <div class="faq-chip" onclick="copyPromo('8DAX')">Comment gagner à Apple of Fortune ?</div>
+        <div class="faq-chip" onclick="copyPromo('8DAX')">Comment m'inscrire ?</div>
+      </div>
+
+      <!-- Standalone Promo Box -->
+      <div style="background: #ffffff; border: 1.5px dashed #d9383a; border-radius: 16px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; margin-top: 4px;">
+        <div>
+          <div style="font-size: 0.65rem; color: #8c7373; font-weight: 700; text-transform: uppercase;">CODE PROMO OFFICIEL</div>
+          <div style="font-size: 1.2rem; font-weight: 800; color: #d9383a; letter-spacing: 1px;">8DAX</div>
+        </div>
+        <button onclick="copyPromo('8DAX')" style="background: #d9383a; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; cursor: pointer;">
+          Copier
         </button>
+      </div>
 
-        <div class="audio-progress-area">
-
-          <div class="progress" id="progress">
-
-            <div
-              class="progress-fill"
-              id="progressFill">
-            </div>
-
-            <div
-              class="progress-knob"
-              id="progressKnob">
-            </div>
-
+      <!-- Platforms Grid -->
+      <div class="platforms-card">
+        <div class="platforms-title">PLATEFORMES RECOMMANDÉES</div>
+        <div class="platforms-grid">
+          <div class="platform-btn" onclick="copyPromo('8DAX')">
+            <div class="platform-left"><span>↗</span> 1XBET <span class="platform-code">8DAX</span></div>
+            <span class="copy-icon">❐</span>
           </div>
-
-          <div class="time-row">
-
-            <span id="currentTime">
-              0:00
-            </span>
-
-            <span id="duration">
-              0:00
-            </span>
-
+          <div class="platform-btn" onclick="copyPromo('8DAX')">
+            <div class="platform-left"><span>↗</span> MELBET <span class="platform-code">8DAX</span></div>
+            <span class="copy-icon">❐</span>
           </div>
-
+          <div class="platform-btn" onclick="copyPromo('8DAX')">
+            <div class="platform-left"><span>↗</span> BETWINNER <span class="platform-code">8DAX</span></div>
+            <span class="copy-icon">❐</span>
+          </div>
+          <div class="platform-btn" onclick="copyPromo('8DAX')">
+            <div class="platform-left"><span>↗</span> WINWIN <span class="platform-code">8DAX</span></div>
+            <span class="copy-icon">❐</span>
+          </div>
+          <div class="platform-btn" onclick="copyPromo('8DAX')">
+            <div class="platform-left"><span>↗</span> PARIPESA <span class="platform-code">8DAX</span></div>
+            <span class="copy-icon">❐</span>
+          </div>
+          <div class="platform-btn" onclick="copyPromo('8DAX')">
+            <div class="platform-left"><span>↗</span> 888STARZ <span class="platform-code">8DAX</span></div>
+            <span class="copy-icon">❐</span>
+          </div>
         </div>
-
-        <div class="speed">
-          1x
-        </div>
-
       </div>
+    </div>
 
-    </section>
-
-
-    <!-- QUESTIONS -->
-
-    <section class="questions">
-
-      <button
-        class="question"
-        onclick="showAnswer('Comment fonctionne ce service ?')">
-
-        Comment fonctionne ce service ?
-
-      </button>
-
-      <button
-        class="question"
-        onclick="showAnswer('Comment m’inscrire ?')">
-
-        Comment m'inscrire ?
-
-      </button>
-
-    </section>
-
-
-    <!-- INFORMATION -->
-
-    <section class="info-box">
-
-      <div class="info-title">
-        INFORMATIONS
-      </div>
-
-      <div class="info-list">
-
-        <div class="info-item">
-          Documentation
-        </div>
-
-        <div class="info-item">
-          Guide utilisateur
-        </div>
-
-        <div class="info-item">
-          FAQ
-        </div>
-
-        <div class="info-item">
-          Assistance
-        </div>
-
-        <div class="info-item">
-          Nouveautés
-        </div>
-
-        <div class="info-item">
-          Contact
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- ================= CHAT ================= -->
-
-  <div class="chat">
-
-    <input
-      id="message"
-      class="message-input"
-      type="text"
-      placeholder="Écrivez votre message..."
-    >
-
-    <button
-      class="send"
-      id="send">
-
-      ➤
-
-    </button>
-
+    <!-- Bottom Input -->
+    <div class="chat-input-bar">
+      <input type="text" class="chat-input" placeholder="Écrivez votre message..." readonly onclick="copyPromo('8DAX')">
+      <button class="send-btn" onclick="copyPromo('8DAX')">➤</button>
+    </div>
   </div>
-
-
-  <!-- ================= AUDIO FILE ================= -->
-
-  <audio id="audio" src="message.mp3"></audio>
-
 
   <script>
+    const audio = document.getElementById('vocalAudio');
+    const playBtn = document.getElementById('playBtn');
+    const progressBar = document.getElementById('progressBar');
+    const currentTimeEl = document.getElementById('currentTime');
+    const totalDurationEl = document.getElementById('totalDuration');
+    const speedBtn = document.getElementById('speedBtn');
+    const speeds = [1, 1.5, 2];
+    let speedIndex = 0;
 
-    /* ================= MENU ================= */
+    // Fetch dynamic media uploaded via Admin Panel
+    async function loadMedia() {
+      try {
+        const res = await fetch('/api/media');
+        const data = await res.json();
+        if (data.profilePic) document.getElementById('profilePic').src = data.profilePic;
+        if (data.voiceNote) audio.src = data.voiceNote;
+      } catch (e) {
+        console.error('Error loading media:', e);
+      }
+    }
+    loadMedia();
 
-    const hamburger =
-      document.getElementById("hamburger");
-
-    const menu =
-      document.getElementById("menu");
-
-    hamburger.addEventListener("click", () => {
-      menu.classList.toggle("active");
-    });
-
-
-    /* ================= AUDIO ================= */
-
-    const audio =
-      document.getElementById("audio");
-
-    const play =
-      document.getElementById("play");
-
-    const progress =
-      document.getElementById("progress");
-
-    const progressFill =
-      document.getElementById("progressFill");
-
-    const progressKnob =
-      document.getElementById("progressKnob");
-
-    const currentTime =
-      document.getElementById("currentTime");
-
-    const duration =
-      document.getElementById("duration");
-
-
-    function formatTime(seconds) {
-
-      if (!isFinite(seconds)) return "0:00";
-
-      const minutes =
-        Math.floor(seconds / 60);
-
-      const secs =
-        Math.floor(seconds % 60)
-          .toString()
-          .padStart(2, "0");
-
-      return `${minutes}:${secs}`;
+    function copyPromo(code) {
+      navigator.clipboard.writeText(code);
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
-
-    audio.addEventListener("loadedmetadata", () => {
-
-      duration.textContent =
-        formatTime(audio.duration);
-
-    });
-
-
-    play.addEventListener("click", () => {
-
+    function toggleAudio() {
       if (audio.paused) {
-
         audio.play();
-
-        play.textContent = "❚❚";
-
+        playBtn.innerText = '❚❚';
       } else {
-
         audio.pause();
-
-        play.textContent = "▶";
-
+        playBtn.innerText = '▶';
       }
-
-    });
-
-
-    audio.addEventListener("timeupdate", () => {
-
-      if (!audio.duration) return;
-
-      const percentage =
-        (audio.currentTime / audio.duration) * 100;
-
-      progressFill.style.width =
-        percentage + "%";
-
-      progressKnob.style.left =
-        percentage + "%";
-
-      currentTime.textContent =
-        formatTime(audio.currentTime);
-
-    });
-
-
-    audio.addEventListener("ended", () => {
-
-      play.textContent = "▶";
-
-      progressFill.style.width = "0%";
-
-      progressKnob.style.left = "0%";
-
-    });
-
-
-    progress.addEventListener("click", (event) => {
-
-      if (!audio.duration) return;
-
-      const rect =
-        progress.getBoundingClientRect();
-
-      const percentage =
-        (event.clientX - rect.left) / rect.width;
-
-      audio.currentTime =
-        percentage * audio.duration;
-
-    });
-
-
-    /* ================= QUESTIONS ================= */
-
-    function showAnswer(text) {
-
-      const input =
-        document.getElementById("message");
-
-      input.value = text;
-
-      input.focus();
-
     }
 
+    audio.ontimeupdate = () => {
+      const pct = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = (pct || 0) + '%';
+      currentTimeEl.innerText = formatTime(audio.currentTime);
+    };
 
-    /* ================= CHAT ================= */
+    audio.onloadedmetadata = () => {
+      totalDurationEl.innerText = formatTime(audio.duration);
+    };
 
-    const message =
-      document.getElementById("message");
+    function seekAudio(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pos * audio.duration;
+    }
 
-    const send =
-      document.getElementById("send");
+    function toggleSpeed() {
+      speedIndex = (speedIndex + 1) % speeds.length;
+      audio.playbackRate = speeds[speedIndex];
+      speedBtn.innerText = speeds[speedIndex] + 'x';
+    }
 
-
-    send.addEventListener("click", () => {
-
-      const text =
-        message.value.trim();
-
-      if (!text) return;
-
-      alert(
-        "Message envoyé : " + text
-      );
-
-      message.value = "";
-
-    });
-
-
-    message.addEventListener("keydown", (event) => {
-
-      if (event.key === "Enter") {
-        send.click();
-      }
-
-    });
-
+    function formatTime(sec) {
+      if (isNaN(sec)) return '0:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
   </script>
-
 </body>
 </html>

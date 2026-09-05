@@ -1,509 +1,56 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>8DAX Apple of Fortune</title>
-  <style>
-    :root {
-      --bg-color: #fcf4f4;
-      --card-bg: #ffffff;
-      --text-dark: #2c1a1a;
-      --text-muted: #8c7373;
-      --accent-red: #d9383a;
-      --accent-light: #fbebe9;
-      --border-color: #f3dcdb;
-      --green-status: #34c759;
-    }
+<!-- Platforms Card -->
+<div class="platforms-card">
+  <div class="platforms-title">PLATEFORMES RECOMMANDÉES</div>
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  <div class="platforms-grid">
 
-    body {
-      background-color: #e5e5e5;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-    }
-
-    .app-container {
-      width: 100%;
-      max-width: 430px;
-      background-color: var(--bg-color);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      position: relative;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    .top-bar {
-      height: 4px;
-      background-color: var(--accent-red);
-      width: 100%;
-    }
-
-    .header {
-      background: var(--card-bg);
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .avatar-container {
-      position: relative;
-      width: 44px;
-      height: 44px;
-    }
-
-    .avatar-img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--border-color);
-    }
-
-    .status-dot {
-      position: absolute;
-      bottom: 1px;
-      right: 1px;
-      width: 12px;
-      height: 12px;
-      background-color: var(--green-status);
-      border-radius: 50%;
-      border: 2px solid white;
-    }
-
-    .header-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .header-title {
-      font-size: 0.98rem;
-      font-weight: 700;
-      color: var(--text-dark);
-    }
-
-    .header-status {
-      font-size: 0.78rem;
-      color: var(--green-status);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .menu-btn {
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: #665252;
-      cursor: pointer;
-    }
-
-    .chat-body {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      flex: 1;
-      padding-bottom: 90px;
-    }
-
-    .message-bubble {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 14px 18px;
-      font-size: 0.92rem;
-      line-height: 1.45;
-      color: var(--text-dark);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.01);
-      max-width: 88%;
-    }
-
-    .audio-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 12px 14px;
-      width: 80%;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.01);
-      position: relative;
-    }
-
-    .audio-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--accent-red);
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .audio-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .play-button {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background-color: var(--accent-red);
-      border: none;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .waveform-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .audio-track {
-      width: 100%;
-      height: 6px;
-      background: #f3dcdb;
-      border-radius: 3px;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .audio-progress {
-      width: 0%;
-      height: 100%;
-      background: var(--accent-red);
-      border-radius: 3px;
-      position: relative;
-    }
-
-    .audio-time {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    .speed-tag {
-      background: #fbebe9;
-      color: var(--accent-red);
-      font-size: 0.75rem;
-      padding: 4px 7px;
-      border-radius: 10px;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-    }
-
-    .faq-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .faq-chip {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 10px 14px;
-      font-size: 0.82rem;
-      color: var(--accent-red);
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .platforms-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 16px;
-      margin-top: 8px;
-    }
-
-    .platforms-title {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #a08a8a;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-bottom: 12px;
-    }
-
-    .platforms-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .platform-btn {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 7px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: var(--text-dark);
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .platform-left {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .platform-code {
-      color: var(--accent-red);
-      font-weight: 800;
-    }
-
-    .copy-icon-box {
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 2px 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #faf4f4;
-    }
-
-    .input-bar {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 430px;
-      background: var(--bg-color);
-      padding: 10px 16px 16px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .input-field {
-      flex: 1;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 25px;
-      padding: 12px 18px;
-      font-size: 0.9rem;
-      color: var(--text-dark);
-      outline: none;
-    }
-
-    .send-btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: #f7dcdb;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .send-btn svg {
-      fill: #d9383a;
-      width: 18px;
-      height: 18px;
-      transform: rotate(45deg);
-    }
-
-    .toast {
-      position: fixed;
-      top: 60px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(44, 26, 26, 0.9);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-      z-index: 100;
-    }
-
-    .toast.show { opacity: 1; }
-  </style>
-</head>
-<body>
-
-  <div class="app-container">
-    <div class="top-bar"></div>
-
-    <!-- Header -->
-    <div class="header">
-      <div class="header-left">
-        <div class="avatar-container">
-          <img id="avatarImg" class="avatar-img" src="https://via.placeholder.com/100/d9383a/ffffff?text=8DAX" alt="Avatar">
-          <div class="status-dot"></div>
-        </div>
-        <div class="header-info">
-          <div class="header-title">8DAX Apple of Fortune</div>
-          <div class="header-status">En ligne</div>
-        </div>
-      </div>
-      <button class="menu-btn">≡</button>
-    </div>
-
-    <!-- Chat Body -->
-    <div class="chat-body">
-      <div class="message-bubble">
-        Salut ! Tu t'intéresses à l'Apple of Fortune ? Tu es au bon endroit. 👌
-        <br><br>
-        Avant de poser tes questions écoute d'abord le vocal suivant
-      </div>
-
-      <!-- Voice Message Card -->
-      <div class="audio-card">
-        <div class="audio-header">
-          <span>🔴 Message vocal</span>
-        </div>
-        <div id="audioPlayerContainer">
-          <div class="audio-controls">
-            <button class="play-button" id="playBtn" onclick="toggleAudio()">▶</button>
-            <div class="waveform-container">
-              <div class="audio-track" onclick="seekAudio(event)">
-                <div class="audio-progress" id="progressBar"></div>
-              </div>
-              <div class="audio-time">
-                <span id="currentTime">0:00</span>
-                <span id="totalDuration">0:00</span>
-              </div>
-            </div>
-            <button class="speed-tag" id="speedBtn" onclick="toggleSpeed()">1x</button>
-          </div>
-        </div>
-        <audio id="vocalAudio" src=""></audio>
-      </div>
-
-      <!-- FAQ Buttons -->
-      <div class="faq-buttons">
-        <div class="faq-chip" onclick="copyPromo('8DAX')">Comment gagner à Apple of Fortune ?</div>
-        <div class="faq-chip" onclick="copyPromo('8DAX')">Comment m'inscrire ?</div>
-      </div>
-
-      <!-- Platforms Card -->
-      <div class="platforms-card">
-        <div class="platforms-title">PLATEFORMES RECOMMANDÉES</div>
-        <div class="platforms-grid">
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left"><span>↗</span> 1XBET <span class="platform-code">8DAX</span></div>
-          </div>
-          <div class="platform-btn" onclick="copyPromo('8DAX')">
-            <div class="platform-left"><span>↗</span> MELBET <span class="platform-code">8DAX</span></div>
-          </div>
-        </div>
+    <div class="platform-btn" onclick="copyPromo('8DAX')">
+      <div class="platform-left">
+        <span>↗</span> 1XBET
+        <span class="platform-code">8DAX</span>
+        <span class="copy-icon-box">⧉</span>
       </div>
     </div>
 
-    <!-- Input Bar -->
-    <div class="input-bar">
-      <input type="text" class="input-field" placeholder="Écrivez votre message...">
-      <button class="send-btn">
-        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
-      </button>
+    <div class="platform-btn" onclick="copyPromo('8DAX')">
+      <div class="platform-left">
+        <span>↗</span> MELBET
+        <span class="platform-code">8DAX</span>
+        <span class="copy-icon-box">⧉</span>
+      </div>
     </div>
 
-    <div id="toast" class="toast">Code promo 8DAX copié !</div>
+    <div class="platform-btn" onclick="copyPromo('8DAX')">
+      <div class="platform-left">
+        <span>↗</span> BETWINNER
+        <span class="platform-code">8DAX</span>
+        <span class="copy-icon-box">⧉</span>
+      </div>
+    </div>
+
+    <div class="platform-btn" onclick="copyPromo('8DAX')">
+      <div class="platform-left">
+        <span>↗</span> WINWIN
+        <span class="platform-code">8DAX</span>
+        <span class="copy-icon-box">⧉</span>
+      </div>
+    </div>
+
+    <div class="platform-btn" onclick="copyPromo('8DAX')">
+      <div class="platform-left">
+        <span>↗</span> 888STARZ
+        <span class="platform-code">8DAX</span>
+        <span class="copy-icon-box">⧉</span>
+      </div>
+    </div>
+
+    <div class="platform-btn" onclick="copyPromo('8DAX')">
+      <div class="platform-left">
+        <span>↗</span> PARIPESA
+        <span class="platform-code">8DAX</span>
+        <span class="copy-icon-box">⧉</span>
+      </div>
+    </div>
+
   </div>
-
-  <script>
-    const audio = document.getElementById('vocalAudio');
-    const playBtn = document.getElementById('playBtn');
-    const progressBar = document.getElementById('progressBar');
-    const currentTimeEl = document.getElementById('currentTime');
-    const totalDurationEl = document.getElementById('totalDuration');
-    const speedBtn = document.getElementById('speedBtn');
-    const toast = document.getElementById('toast');
-
-    function toggleAudio() {
-      if (!audio.src) return;
-      if (audio.paused) { audio.play(); playBtn.innerText = '⏸'; }
-      else { audio.pause(); playBtn.innerText = '▶'; }
-    }
-
-    if (audio) {
-      audio.ontimeupdate = () => {
-        if (audio.duration) {
-          const pct = (audio.currentTime / audio.duration) * 100;
-          progressBar.style.width = pct + '%';
-          let mins = Math.floor(audio.currentTime / 60);
-          let secs = Math.floor(audio.currentTime % 60);
-          currentTimeEl.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-      };
-      audio.onended = () => { playBtn.innerText = '▶'; progressBar.style.width = '0%'; };
-    }
-
-    function seekAudio(event) {
-      if (!audio.duration) return;
-      const track = event.currentTarget;
-      const clickX = event.clientX - track.getBoundingClientRect().left;
-      audio.currentTime = (clickX / track.clientWidth) * audio.duration;
-    }
-
-    function toggleSpeed() {
-      const speeds = [1, 1.5, 2];
-      let current = parseFloat(speedBtn.innerText);
-      let next = speeds[(speeds.indexOf(current) + 1) % speeds.length];
-      speedBtn.innerText = next + 'x';
-      if (audio) audio.playbackRate = next;
-    }
-
-    function copyPromo(code) {
-      navigator.clipboard.writeText(code);
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-
-    // Automatically load published media from server
-    async function loadPublishedMedia() {
-      try {
-        const res = await fetch('/api/media');
-        const data = await res.json();
-        if (data.avatarUrl) document.getElementById('avatarImg').src = data.avatarUrl;
-        if (data.vocalUrl) {
-          audio.src = data.vocalUrl;
-          audio.onloadedmetadata = () => {
-            let mins = Math.floor(audio.duration / 60);
-            let secs = Math.floor(audio.duration % 60);
-            totalDurationEl.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-          };
-        }
-      } catch (err) { console.error(err); }
-    }
-
-    window.addEventListener('DOMContentLoaded', loadPublishedMedia);
-  </script>
-</body>
-</html>
+</div>

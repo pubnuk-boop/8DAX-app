@@ -412,12 +412,8 @@
       <div class="header-left">
 
         <div class="avatar-container">
-          <img
-            id="avatarImg"
-            class="avatar-img"
-            src="https://via.placeholder.com/100/d9383a/ffffff?text=8DAX"
-            alt="Avatar"
-          >
+          <img id="profilePic" src="avatar-placeholder.png" alt="Profile Picture">
+
 
           <div class="status-dot"></div>
         </div>
@@ -1084,19 +1080,20 @@
     /* LOAD PUBLISHED MEDIA */
 
 async function loadPublishedMedia() {
+  // Find the profile picture element by potential IDs
+  const profilePicEl = document.getElementById('profilePic') || 
+                       document.getElementById('avatar') || 
+                       document.querySelector('.profile-pic img') || 
+                       document.querySelector('img');
+
+  const audioEl = document.getElementById('audioPlayer') || document.querySelector('audio');
+
   // 1. Load instantly from localStorage
   const savedPic = localStorage.getItem('8dax_profilePic');
   const savedAudio = localStorage.getItem('8dax_voiceNote');
 
-  const profilePicEl = document.getElementById('profilePic');
-  const audioEl = document.getElementById('audioPlayer') || document.querySelector('audio');
-
-  if (savedPic && profilePicEl) {
-    profilePicEl.src = savedPic;
-  }
-  if (savedAudio && audioEl) {
-    audioEl.src = savedAudio;
-  }
+  if (savedPic && profilePicEl) profilePicEl.src = savedPic;
+  if (savedAudio && audioEl) audioEl.src = savedAudio;
 
   // 2. Fetch fresh links from server
   try {
@@ -1114,6 +1111,7 @@ async function loadPublishedMedia() {
     console.error('Error fetching media:', e);
   }
 }
+
 
 
 

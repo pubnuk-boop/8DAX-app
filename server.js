@@ -26,12 +26,12 @@ const storage = new CloudinaryStorage({
     } else if (file.fieldname === 'voiceNote') {
       return {
         folder: '8dax_uploads',
-        resource_type: 'auto', // Allows Cloudinary to handle all audio types automatically
-        allowed_formats: ['mp3', 'wav', 'm4a', 'aac', 'ogg', 'qta', 'caf']
+        resource_type: 'video' // Cloudinary classifies audio/m4a/qta under 'video' or 'auto'
       };
     }
   },
 });
+
 
 const upload = multer({ storage });
 

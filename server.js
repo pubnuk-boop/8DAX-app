@@ -1,20 +1,20 @@
 const express = require('express');
 const multer = require('multer');
-const jwt = require('jsonwebtoken');
-const path = require('path');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const path = require('path');
 
 const app = express();
-app.use(express.json());
-app.use(express.static('public'));
+const PORT = process.env.PORT || 3000;
 
+// Configuration Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+// Stockage Cloudinary sans restriction de format
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
@@ -23,59 +23,50 @@ const storage = new CloudinaryStorage({
         folder: '8dax_uploads',
         resource_type: 'image'
       };
-    } else if (file.fieldname === 'voiceNote') {
+    } else {
       return {
         folder: '8dax_uploads',
-        resource_type: 'auto',
-        flags: 'attachment'
+        resource_type: 'auto'
       };
     }
   },
 });
 
-
-
 const upload = multer({ storage: storage });
 
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/api/login', (req, res) => {
-  const { password } = req.body;
-  if (password === process.env.ADMIN_PASSWORD) {
-    const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    return res.json({ success: true, token });
-  }
-  res.status(401).json({ success: false, message: 'Mot de passe incorrect' });
-});
-
-const authenticateAdmin = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'Non autorisé' });
-  try {
-    req.user = jwt.verify(token, process.env.JWT_SECRET);
-    next();
-  } catch (err) {
-    res.status(403).json({ message: 'Token invalide' });
-  }
+// Stockage temporaire des URLs
+let mediaUrls = {
+  profilePic: '',
+  voiceNote: ''
 };
 
-app.post('/api/admin/upload', authenticateAdmin, upload.fields([{ name: 'avatar' }, { name: 'vocal' }]), (req, res) => {
-  res.json({ success: true, message: 'Fichiers mis à jour !' });
-});
-
-app.get('/api/media', async (req, res) => {
+// Route d'upload pour l'administration
+app.post('/api/upload', upload.fields([
+  { name: 'profilePic', maxCount: 1 },
+  { name: 'voiceNote', maxCount: 1 }
+]), (req, res) => {
   try {
-    const avatar = cloudinary.url('8dax_uploads/avatar', { secure: true });
-    const vocal = cloudinary.url('8dax_uploads/vocal', { resource_type: 'video', secure: true });
-    
-    res.json({
-      avatarUrl: `${avatar}?t=${Date.now()}`,
-      vocalUrl: `${vocal}?t=${Date.now()}`
-    });
-  } catch (err) {
-    res.status(500).json({ error: 'Erreur lors de la récupération' });
+    if (req.files && req.files.profilePic) {
+      mediaUrls.profilePic = req.files.profilePic[0].path;
+    }
+    if (req.files && req.files.voiceNote) {
+      mediaUrls.voiceNote = req.files.voiceNote[0].path;
+    }
+    res.json({ success: true, mediaUrls });
+  } catch (error) {
+    console.error('Erreur Upload:', error);
+    res.status(500).json({ success: false, message: error.message });
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Serveur lancé sur le port ${PORT}`));
- 
+// Route pour récupérer les médias sur la page d'accueil
+app.get('/api/media', (req, res) => {
+  res.json(mediaUrls);
+});
+
+app.listen(PORT, () => {
+  console.log(`Serveur démarré sur le port ${PORT}`);
+});

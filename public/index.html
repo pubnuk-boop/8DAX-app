@@ -1083,54 +1083,38 @@
 
     /* LOAD PUBLISHED MEDIA */
 
-    async function loadPublishedMedia() {
+async function loadPublishedMedia() {
+  // 1. Load instantly from localStorage
+  const savedPic = localStorage.getItem('8dax_profilePic');
+  const savedAudio = localStorage.getItem('8dax_voiceNote');
 
-      try {
+  const profilePicEl = document.getElementById('profilePic');
+  const audioEl = document.getElementById('audioPlayer') || document.querySelector('audio');
 
-        const res =
-          await fetch('/api/media');
+  if (savedPic && profilePicEl) {
+    profilePicEl.src = savedPic;
+  }
+  if (savedAudio && audioEl) {
+    audioEl.src = savedAudio;
+  }
 
-        const data =
-          await res.json();
-
-
-        if (data.avatarUrl) {
-
-          document.getElementById(
-            'avatarImg'
-          ).src = data.avatarUrl;
-
-        }
-
-
-        if (data.vocalUrl) {
-
-          audio.src =
-            data.vocalUrl;
-
-
-          audio.onloadedmetadata = () => {
-
-            let mins =
-              Math.floor(audio.duration / 60);
-
-            let secs =
-              Math.floor(audio.duration % 60);
-
-            totalDurationEl.innerText =
-              `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-
-          };
-
-        }
-
-      } catch (err) {
-
-        console.error(err);
-
-      }
-
+  // 2. Fetch fresh links from server
+  try {
+    const res = await fetch('/api/media');
+    const data = await res.json();
+    if (data.profilePic && profilePicEl) {
+      profilePicEl.src = data.profilePic;
+      localStorage.setItem('8dax_profilePic', data.profilePic);
     }
+    if (data.voiceNote && audioEl) {
+      audioEl.src = data.voiceNote;
+      localStorage.setItem('8dax_voiceNote', data.voiceNote);
+    }
+  } catch (e) {
+    console.error('Error fetching media:', e);
+  }
+}
+
 
 
     window.addEventListener(

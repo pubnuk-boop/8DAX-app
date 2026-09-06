@@ -6,6 +6,15 @@
   <title>8DAX Apple of Fortune</title>
 
   <style>
+    <style>
+  /* Paste this at the top inside <style> */
+  #profilePic, .profile-pic img {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+  }
+
     :root {
       --bg-color: #fcf4f4;
       --card-bg: #ffffff;
@@ -412,7 +421,8 @@
       <div class="header-left">
 
         <div class="avatar-container">
-          <img id="profilePic" src="avatar-placeholder.png" alt="Profile Picture">
+          <img id="profilePic" src="default-avatar.png" alt="Profile" class="profile-pic">
+
 
 
           <div class="status-dot"></div>

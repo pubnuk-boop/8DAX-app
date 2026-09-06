@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>8DAX Apple Fortune</title>
+  <title>8DAX Apple of Fortune</title>
 
   <style>
     :root {
@@ -303,17 +303,31 @@
       white-space: nowrap;
     }
 
+    /* CHATGPT-STYLE COPY BOX */
+
     .copy-icon-box {
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 2px 4px;
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #faf4f4;
-      color: #8c99ad;
+      border: 1px solid #e5e5e5;
+      border-radius: 7px;
+      background: #ffffff;
+      color: #6b7280;
       margin-left: auto;
       flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .copy-icon-box:hover {
+      background: #f5f5f5;
+      color: #2c1a1a;
+    }
+
+    .copy-icon-box svg {
+      width: 15px;
+      height: 15px;
     }
 
     /* INPUT */
@@ -409,13 +423,15 @@
         </div>
 
         <div class="header-info">
+
           <div class="header-title">
-            Mopizor Apple Fortune
+            8DAX Apple of Fortune
           </div>
 
           <div class="header-status">
             ● &nbsp;En ligne
           </div>
+
         </div>
 
       </div>
@@ -444,7 +460,7 @@
       <div class="audio-card">
 
         <div class="audio-header">
-          <span>🔴 Message vocal</span>
+          <span>🎙️ Message vocal</span>
         </div>
 
         <div id="audioPlayerContainer">
@@ -531,11 +547,10 @@
 
         <div class="platforms-grid">
 
-
           <!-- 1XBET -->
           <div
             class="platform-btn"
-            onclick="copyPromo('8DAX')"
+            onclick="copyPromo('8DAX', 'https://1xbet.com/')"
           >
             <div class="platform-left">
 
@@ -547,8 +562,29 @@
                 8DAX
               </span>
 
-              <span class="copy-icon-box">
-                ⧉
+              <span class="copy-icon-box" title="Copier">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect
+                    x="9"
+                    y="9"
+                    width="11"
+                    height="11"
+                    rx="2"
+                  ></rect>
+
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+
               </span>
 
             </div>
@@ -558,7 +594,7 @@
           <!-- MELBET -->
           <div
             class="platform-btn"
-            onclick="copyPromo('8DAX')"
+            onclick="copyPromo('8DAX', 'https://melbet.com/')"
           >
             <div class="platform-left">
 
@@ -570,8 +606,29 @@
                 8DAX
               </span>
 
-              <span class="copy-icon-box">
-                ⧉
+              <span class="copy-icon-box" title="Copier">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect
+                    x="9"
+                    y="9"
+                    width="11"
+                    height="11"
+                    rx="2"
+                  ></rect>
+
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+
               </span>
 
             </div>
@@ -581,7 +638,7 @@
           <!-- BETWINNER -->
           <div
             class="platform-btn"
-            onclick="copyPromo('8DAX')"
+            onclick="copyPromo('8DAX', 'https://betwinner.com/')"
           >
             <div class="platform-left">
 
@@ -593,54 +650,29 @@
                 8DAX
               </span>
 
-              <span class="copy-icon-box">
-                ⧉
-              </span>
+              <span class="copy-icon-box" title="Copier">
 
-            </div>
-          </div>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect
+                    x="9"
+                    y="9"
+                    width="11"
+                    height="11"
+                    rx="2"
+                  ></rect>
 
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
 
-          <!-- 888STARZ -->
-          <div
-            class="platform-btn"
-            onclick="copyPromo('8DAX')"
-          >
-            <div class="platform-left">
-
-              <span>↗</span>
-
-              <span>888STARZ</span>
-
-              <span class="platform-code">
-                8DAX
-              </span>
-
-              <span class="copy-icon-box">
-                ⧉
-              </span>
-
-            </div>
-          </div>
-
-
-          <!-- PARIPESA -->
-          <div
-            class="platform-btn"
-            onclick="copyPromo('8DAX')"
-          >
-            <div class="platform-left">
-
-              <span>↗</span>
-
-              <span>PARIPESA</span>
-
-              <span class="platform-code">
-                8DAX
-              </span>
-
-              <span class="copy-icon-box">
-                ⧉
               </span>
 
             </div>
@@ -650,7 +682,7 @@
           <!-- WINWIN -->
           <div
             class="platform-btn"
-            onclick="copyPromo('8DAX')"
+            onclick="copyPromo('8DAX', 'https://winwin.com/')"
           >
             <div class="platform-left">
 
@@ -662,13 +694,121 @@
                 8DAX
               </span>
 
-              <span class="copy-icon-box">
-                ⧉
+              <span class="copy-icon-box" title="Copier">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect
+                    x="9"
+                    y="9"
+                    width="11"
+                    height="11"
+                    rx="2"
+                  ></rect>
+
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+
               </span>
 
             </div>
           </div>
 
+
+          <!-- 888STARZ -->
+          <div
+            class="platform-btn"
+            onclick="copyPromo('8DAX', 'https://888starz.com/')"
+          >
+            <div class="platform-left">
+
+              <span>↗</span>
+
+              <span>888STARZ</span>
+
+              <span class="platform-code">
+                8DAX
+              </span>
+
+              <span class="copy-icon-box" title="Copier">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect
+                    x="9"
+                    y="9"
+                    width="11"
+                    height="11"
+                    rx="2"
+                  ></rect>
+
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+
+              </span>
+
+            </div>
+          </div>
+
+
+          <!-- PARIPESA -->
+          <div
+            class="platform-btn"
+            onclick="copyPromo('8DAX', 'https://paripesa.com/')"
+          >
+            <div class="platform-left">
+
+              <span>↗</span>
+
+              <span>PARIPESA</span>
+
+              <span class="platform-code">
+                8DAX
+              </span>
+
+              <span class="copy-icon-box" title="Copier">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect
+                    x="9"
+                    y="9"
+                    width="11"
+                    height="11"
+                    rx="2"
+                  ></rect>
+
+                  <path
+                    d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                  ></path>
+                </svg>
+
+              </span>
+
+            </div>
+          </div>
 
         </div>
       </div>
@@ -747,6 +887,7 @@
         playBtn.innerText = '▶';
 
       }
+
     }
 
 
@@ -835,23 +976,28 @@
     }
 
 
-    /* COPY PROMO */
+    /* COPY PROMO + OPEN WEBSITE */
 
-    function copyPromo(code) {
+    function copyPromo(code, website) {
 
-      if (
-        navigator.clipboard &&
-        navigator.clipboard.writeText
-      ) {
+      const copyText = () => {
 
-        navigator.clipboard.writeText(code);
+        if (
+          navigator.clipboard &&
+          navigator.clipboard.writeText
+        ) {
 
-      } else {
+          return navigator.clipboard.writeText(code);
+
+        }
 
         const textarea =
           document.createElement('textarea');
 
         textarea.value = code;
+
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
 
         document.body.appendChild(textarea);
 
@@ -861,20 +1007,76 @@
 
         textarea.remove();
 
-      }
+        return Promise.resolve();
+
+      };
 
 
-      toast.innerText =
-        'Code promo ' + code + ' copié !';
+      copyText()
+        .then(() => {
 
-      toast.classList.add('show');
+          toast.innerText =
+            'Code promo ' + code + ' copié !';
+
+          toast.classList.add('show');
 
 
-      setTimeout(() => {
+          /*
+           * Open the corresponding bookmaker
+           * after copying the promo code.
+           */
 
-        toast.classList.remove('show');
+          if (website) {
 
-      }, 2000);
+            setTimeout(() => {
+
+              window.open(
+                website,
+                '_blank',
+                'noopener,noreferrer'
+              );
+
+            }, 300);
+
+          }
+
+
+          setTimeout(() => {
+
+            toast.classList.remove('show');
+
+          }, 2000);
+
+        })
+        .catch(() => {
+
+          /*
+           * Even if clipboard permission is unavailable,
+           * open the requested website.
+           */
+
+          toast.innerText =
+            'Ouverture du site...';
+
+          toast.classList.add('show');
+
+          if (website) {
+
+            window.open(
+              website,
+              '_blank',
+              'noopener,noreferrer'
+            );
+
+          }
+
+          setTimeout(() => {
+
+            toast.classList.remove('show');
+
+          }, 2000);
+
+        });
 
     }
 

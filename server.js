@@ -21,19 +21,22 @@ const storage = new CloudinaryStorage({
     if (file.fieldname === 'profilePic') {
       return {
         folder: '8dax_uploads',
-        allowed_formats: ['jpg', 'png', 'jpeg', 'webp']
+        resource_type: 'image'
       };
     } else if (file.fieldname === 'voiceNote') {
       return {
         folder: '8dax_uploads',
-        resource_type: 'video' // Cloudinary classifies audio/m4a/qta under 'video' or 'auto'
+        resource_type: 'auto',
+        flags: 'attachment'
       };
     }
   },
 });
 
 
-const upload = multer({ storage });
+
+const upload = multer({ storage: storage });
+
 
 app.post('/api/login', (req, res) => {
   const { password } = req.body;

@@ -18,13 +18,19 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
-    const isAudio = file.mimetype.includes('audio');
-    return {
-      folder: '8dax_uploads',
-      resource_type: isAudio ? 'video' : 'image',
-      public_id: file.fieldname
-    };
-  }
+    if (file.fieldname === 'profilePic') {
+      return {
+        folder: '8dax_uploads',
+        allowed_formats: ['jpg', 'png', 'jpeg', 'webp']
+      };
+    } else if (file.fieldname === 'voiceNote') {
+      return {
+        folder: '8dax_uploads',
+        resource_type: 'auto', // Allows Cloudinary to handle all audio types automatically
+        allowed_formats: ['mp3', 'wav', 'm4a', 'aac', 'ogg', 'qta', 'caf']
+      };
+    }
+  },
 });
 
 const upload = multer({ storage });
